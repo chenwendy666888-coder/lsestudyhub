@@ -55,6 +55,7 @@
   if (!co) { document.getElementById("heroIn").innerHTML = "<h1>Course not found</h1>"; }
   else {
     H.applyAccent(c);
+    document.documentElement.style.setProperty("--herobg", co.accent);
     document.getElementById("band").innerHTML = H.bandSVG({ color: "#ffffff", opacity: 0.5 });
     document.getElementById("heroIn").innerHTML =
       '<p class="kicker">' + H.esc(co.code) + ' · ' + H.esc(co.term) + '</p>' +
@@ -67,7 +68,7 @@
       '</div>';
 
     var exStats = H.courseExStats(c);
-    document.getElementById("weeksNote").textContent = "作业总进度 " + exStats.done + "/" + exStats.total + " 题。点开某周进入学习页。";
+    document.getElementById("weeksNote").textContent = "作业 " + exStats.done + "/" + exStats.total;
 
     var tl = document.getElementById("tl");
     co.weeks.forEach(function (w) {

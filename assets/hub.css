@@ -44,17 +44,17 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em;line-h
 .topnav a:hover{background:var(--indigo-soft);color:var(--indigo-deep);text-decoration:none}
 .topnav a.here{background:var(--indigo);color:#fff}
 
-/* ---------- hero / course head (flat, light, red rule) ---------- */
-.hero{background:var(--surface);color:var(--ink);border-bottom:3px solid var(--accent);
+/* ---------- hero / course head (solid colour) ---------- */
+.hero{background:var(--herobg,#24216B);color:#fff;
   border-radius:0 0 16px 16px;overflow:hidden;position:relative}
 .hero .in{position:relative;z-index:2;padding:26px 20px 30px}
-.kicker{font-size:12.5px;font-weight:600;color:var(--muted);margin:0 0 6px}
-.hero h1{margin:0 0 6px;font-size:clamp(24px,4.4vw,32px);color:var(--ink)}
-.hero .sub{margin:0;color:var(--muted);font-size:15px;max-width:60ch}
+.kicker{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.72);margin:0 0 6px}
+.hero h1{margin:0 0 6px;font-size:clamp(24px,4.4vw,32px);color:#fff}
+.hero .sub{margin:0;color:rgba(255,255,255,.9);font-size:15px;max-width:60ch}
 .hero .meta{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px}
-.hero .pill{background:#F1F2F7;border:1px solid var(--line);
-  border-radius:99px;padding:4px 11px;color:var(--ink);font-weight:600}
-.hero .pill a{color:var(--accent);text-decoration:underline;text-underline-offset:2px}
+.hero .pill{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3);
+  border-radius:99px;padding:4px 11px;color:#fff;font-weight:600}
+.hero .pill a{color:#fff;text-decoration:underline;text-underline-offset:2px}
 /* ε-band motif drawn into hero */
 .hero .band{display:none}
 
@@ -110,10 +110,10 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.01em;line-h
 .course-card{display:block;color:inherit;background:var(--surface);border:1px solid var(--line);
   border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .course-card:hover{text-decoration:none;border-color:color-mix(in srgb,var(--caccent,#3B37B5) 40%,var(--line))}
-.course-card .top{padding:16px 20px;color:var(--ink);background:var(--surface-2);border-bottom:3px solid var(--caccent,var(--accent))}
-.course-card .code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--muted)}
+.course-card .top{padding:18px 20px;color:#fff;background:var(--caccent,#24216B)}
+.course-card .code{font-family:var(--mono);font-size:12.5px;font-weight:600;color:rgba(255,255,255,.85)}
 .course-card .cname{font-family:var(--display);font-weight:600;font-size:20px;margin:2px 0 0}
-.course-card .czh{font-size:13px;color:var(--muted);margin-top:2px}
+.course-card .czh{font-size:13px;color:rgba(255,255,255,.9);margin-top:2px}
 .course-card .body{padding:16px 20px}
 .spine{display:flex;gap:5px;margin:2px 0 12px}
 .spine .n{flex:1;height:26px;border-radius:6px;background:var(--line-soft);display:flex;align-items:center;

@@ -30,7 +30,7 @@
   <details class="wk-sec" id="s-note" open>
     <summary class="wk-sum"><span class="tt">记 · Note</span><span class="en">Your notes (Markdown)</span><span class="chev">&rsaquo;</span></summary>
     <div class="wk-in">
-      <p class="sec-note">笔记你自己写在 <code id="notePath"></code>。在 GitHub Pages 上会渲染在下面；本地双击打开时点链接看原文。</p>
+      <p class="sec-note"><code id="notePath"></code></p>
       <div class="card" id="noteBox">加载笔记…</div>
     </div>
   </details>
@@ -38,7 +38,6 @@
   <details class="wk-sec" id="s-feynman" open>
     <summary class="wk-sum"><span class="tt">讲 · Feynman</span><span class="en">Say it in one breath</span><span class="chev">&rsaquo;</span></summary>
     <div class="wk-in">
-      <p class="sec-note">每条用一两句人话讲清楚。讲不出＝没懂，回讲义。写完点「对照要点」自评。</p>
       <div id="feynman"></div>
     </div>
   </details>
@@ -63,7 +62,6 @@
     <summary class="wk-sum"><span class="tt">要问的问题</span><span class="en">Ask in class / seminar / office hour</span><span class="chev">&rsaquo;</span></summary>
     <div class="wk-in">
       <div class="tool">
-        <p class="hint">上课/小班/答疑前把卡点存这儿，问完打勾。</p>
         <textarea class="field" id="askInput" rows="2" placeholder="例：Sandwich 定理里为什么要求两侧趋于同一个极限？"></textarea>
         <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="askAdd">加入清单</button></div>
         <div id="askList" style="margin-top:8px"></div>
@@ -75,7 +73,6 @@
     <summary class="wk-sum"><span class="tt">AI 使用记录</span><span class="en">AI usage log</span><span class="chev">&rsaquo;</span></summary>
     <div class="wk-in">
       <div class="tool">
-        <p class="hint">按系里政策，记下这周用 AI 做了什么、学到什么，保持透明可回溯。</p>
         <textarea class="field" id="aiInput" rows="2" placeholder="例：让 AI 解释共轭技巧背后的恒等式；我自己重做了那道极限。"></textarea>
         <div style="margin-top:8px"><button class="btn btn-ghost btn-sm" id="aiAdd">记一条</button></div>
         <div id="aiList" style="margin-top:8px"></div>
@@ -86,7 +83,6 @@
   <details class="wk-sec" id="s-collect">
     <summary class="wk-sum"><span class="tt">收 · Collect &amp; 习 · Review</span><span class="en">Cards from this week</span><span class="chev">&rsaquo;</span></summary>
     <div class="wk-in">
-      <p class="sec-note">右下角「🙋 我没懂 / 记一笔」随手把没懂/错题/必背存进错题本；它们会按间隔重复重现。</p>
       <div id="weekCards"></div>
       <div style="margin-top:12px"><a class="btn btn-primary btn-sm" href="review.html">去复习错题本 →</a></div>
     </div>
