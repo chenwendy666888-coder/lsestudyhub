@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Course · LSE Study Hub</title>
+<meta name="theme-color" content="#3B37B5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+<div id="top"></div>
+<header class="hero" id="hero">
+  <div id="band"></div>
+  <div class="wrap in" id="heroIn"></div>
+</header>
+
+<main class="wrap" style="margin-top:22px">
+  <div class="grid" style="grid-template-columns:minmax(0,1fr);gap:22px">
+
+    <section>
+      <div class="sec-h"><h2>周次</h2><span class="en">Weeks</span></div>
+      <p class="sec-note" id="weeksNote"></p>
+      <div class="tl" id="tl"></div>
+    </section>
+
+    <section>
+      <div class="sec-h"><h2>学习目标</h2><span class="en">Learning outcomes</span></div>
+      <div class="card"><ul id="outcomes" style="margin:0;padding-left:20px"></ul></div>
+    </section>
+
+    <div class="grid c2">
+      <section>
+        <div class="sec-h"><h2>考试资源</h2><span class="en">Exam prep</span></div>
+        <div class="card"><ul id="exams" style="margin:0;padding-left:18px;font-size:14px"></ul>
+          <p class="sec-note" style="margin:10px 0 0">在 Moodle 的 Assessment 区下载。100% 期末闭卷。</p></div>
+      </section>
+      <section>
+        <div class="sec-h"><h2>前置 &amp; 政策</h2><span class="en">Prereq &amp; policy</span></div>
+        <div class="card"><ul id="prereq" style="margin:0 0 10px;padding-left:18px;font-size:14px"></ul>
+          <div id="ai" style="font-size:13.5px;color:var(--muted)"></div></div>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="wrap" id="foot"></footer>
+
+<script src="assets/hub.js"></script>
+<script src="data/ma221.js"></script>
+<script>
+  var H = window.LSEHUB, c = H.qs("c") || "ma221", co = H.course(c);
+  document.getElementById("top").outerHTML = H.topbar();
+  if (!co) { document.getElementById("heroIn").innerHTML = "<h1>Course not found</h1>"; }
+  else {
+    H.applyAccent(c);
+    document.getElementById("hero").style.background = "linear-gradient(135deg,#24216B," + co.accent + ")";
+    document.getElementById("band").innerHTML = H.bandSVG({ color: "#ffffff", opacity: 0.5 });
+    document.getElementById("heroIn").innerHTML =
+      '<p class="kicker">' + H.esc(co.code) + ' · ' + H.esc(co.term) + '</p>' +
+      '<h1>' + H.esc(co.title) + '</h1>' +
+      '<p class="sub">' + H.esc(co.titleZh) + '</p>' +
+      '<div class="meta">' +
+        '<span class="pill">' + H.esc(co.convenor) + '</span>' +
+        '<span class="pill">100% exam</span>' +
+        '<span class="pill"><a href="' + co.moodle + '" target="_blank" rel="noopener">Moodle ↗</a></span>' +
+      '</div>';
+
+    var exStats = H.courseExStats(c);
+    document.getElementById("weeksNote").textContent = "作业总进度 " + exStats.done + "/" + exStats.total + " 题。点开某周进入学习页。";
+
+    var tl = document.getElementById("tl");
+    co.weeks.forEach(function (w) {
+      var done = H.weekDone(c, w.n);
+      var state = done ? "done" : (w.status === "active" ? "active" : (w.status === "locked" ? "locked" : ""));
+      var assigned = (w.exercises && w.exercises.assigned) || [];
+      var exd = assigned.filter(function (id) { return H.exDone(c, w.n, id); }).length;
+      var right = "";
+      if (w.status === "active") right += '<span class="badge accent">本周</span>';
+      if (w.lecture) right += '<span class="badge live">讲义</span>';
+      right += '<span class="badge ' + (exd === assigned.length && assigned.length ? "ok" : "muted") + '">题 ' + exd + '/' + assigned.length + '</span>';
+      var item = document.createElement("div");
+      item.className = "tl-item " + state;
+      item.innerHTML =
+        '<span class="tl-dot">' + (done ? "✓" : w.n) + '</span>' +
+        '<a class="tl-card" href="week.html?c=' + c + '&w=' + w.n + '">' +
+          '<span class="wk">Wk ' + w.n + '</span>' +
+          '<span class="tt"><b>' + H.esc(w.title) + '</b><span>' + H.esc(w.titleZh) + " · " + H.esc((w.topics || []).slice(0, 3).join(" · ")) + '</span></span>' +
+          '<span class="rt">' + right + '</span>' +
+        '</a>';
+      tl.appendChild(item);
+    });
+
+    document.getElementById("outcomes").innerHTML = co.outcomes.map(function (o) {
+      return '<li style="margin:5px 0"><b style="font-weight:600">' + H.esc(o.en) + '</b><br><span style="color:var(--muted);font-size:13.5px">' + H.esc(o.zh) + "</span></li>";
+    }).join("");
+
+    document.getElementById("exams").innerHTML = (co.exams || []).map(function (e) {
+      return "<li>" + H.esc(e.label) + (e.note ? ' <span style="color:var(--muted)">— ' + H.esc(e.note) + "</span>" : "") + "</li>";
+    }).join("");
+
+    document.getElementById("prereq").innerHTML = (co.prereq || []).map(function (p) {
+      return "<li>" + H.esc(p.label) + '<br><span style="color:var(--muted)">' + H.esc(p.z) + "</span></li>";
+    }).join("");
+
+    if (co.aiPolicy) document.getElementById("ai").innerHTML = "🤖 " + '<a href="' + co.aiPolicy.url + '" target="_blank" rel="noopener">' + H.esc(co.aiPolicy.label) + " ↗</a> — 用 AI 学习时按系里政策，并在每周页记下用法。";
+
+    document.getElementById("foot").innerHTML = "<b>" + H.esc(co.code) + "</b> · " + H.esc(co.title) + " · <a href='index.html'>← 回 Hub</a>";
+  }
+</script>
+</body>
+</html>

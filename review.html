@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>错题本 Review · LSE Study Hub</title>
+<meta name="theme-color" content="#3B37B5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🗂️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<link rel="stylesheet" href="assets/hub.css">
+<style>
+  .flip{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lg);
+    padding:26px 24px;min-height:230px;display:flex;flex-direction:column}
+  .flip .meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+  .flip .front{font-size:20px;font-family:var(--display);color:var(--indigo-deep);line-height:1.35}
+  .flip .back{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font-size:16px;white-space:pre-wrap}
+  .grade{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}
+  .grade button{border:1px solid var(--line);background:#fff;border-radius:11px;padding:11px 6px;cursor:pointer;font:600 13px var(--sans)}
+  .grade button b{display:block;font-size:15px}
+  .grade .again{color:var(--danger)} .grade .hard{color:var(--warn)} .grade .good{color:var(--indigo)} .grade .easy{color:var(--ok)}
+  .grade button:hover{border-color:currentColor}
+  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:6px 0 12px}
+  .filters select,.filters input{border:1.5px solid var(--line);border-radius:9px;padding:7px 10px;font:14px var(--sans)}
+  .mrow{display:flex;gap:10px;align-items:flex-start;padding:11px 0;border-top:1px solid var(--line-soft)}
+  .mrow:first-child{border-top:none}
+  .mrow .body{flex:1;min-width:0}
+  .mrow .sub{font-size:12px;color:var(--faint);margin-top:3px}
+  .mini{border:none;background:none;cursor:pointer;color:var(--muted);font-size:13px;font-weight:600}
+  .mini:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="top"></div>
+<main class="wrap" style="margin-top:18px">
+  <div class="sec-h"><h1 style="font-size:26px;color:var(--indigo-deep)">错题本</h1><span class="en">Spaced-repetition review</span></div>
+  <p class="sec-note" id="stats"></p>
+
+  <section id="reviewZone" class="card" style="padding:0;border:none;box-shadow:none;background:none"></section>
+
+  <div class="hr"></div>
+  <div class="sec-h"><h2>全部卡片</h2><span class="en">Manage</span></div>
+  <div class="filters">
+    <select id="fCourse"></select>
+    <select id="fType"><option value="">全部类型</option><option value="confuse">🙋 没懂</option><option value="mistake">✗ 错题</option><option value="keypoint">⭐ 必背</option></select>
+    <input id="fSearch" placeholder="搜索文字 / 标签" style="flex:1;min-width:140px">
+    <button class="btn btn-ghost btn-sm" id="addBtn">+ 新建卡片</button>
+    <button class="btn btn-ghost btn-sm" id="exportBtn">导出 JSON</button>
+  </div>
+  <div class="card" id="manage"></div>
+</main>
+<footer class="wrap"><a href="index.html">← 回 Hub</a></footer>
+
+<script src="assets/katex/katex.min.js"></script>
+<script src="assets/katex/auto-render.min.js"></script>
+<script src="assets/hub.js"></script>
+<script src="data/ma221.js"></script>
+<script>
+var H = window.LSEHUB;
+document.getElementById("top").outerHTML = H.topbar("review.html");
+function katex(r){ if(window.renderMathInElement) renderMathInElement(r||document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false}); }
+var TYPE={confuse:["🙋 没懂","live"],mistake:["✗ 错题","warn"],keypoint:["⭐ 必背","accent"]};
+function courseLabel(code){ var co=H.course(code); return co?co.code:code||"—"; }
+
+function stats(){
+  var all=H.cards(), due=H.cardsDue();
+  var by={confuse:0,mistake:0,keypoint:0}; all.forEach(function(c){ if(by[c.type]!=null) by[c.type]++; });
+  document.getElementById("stats").innerHTML = '共 <b>'+all.length+'</b> 张 · 今天到期 <b style="color:var(--accent)">'+due.length+'</b>'+
+    ' · 🙋 '+by.confuse+' · ✗ '+by.mistake+' · ⭐ '+by.keypoint;
+}
+
+/* ---------- review session ---------- */
+var queue=[], idx=0, shown=false;
+function startReview(){
+  queue = H.cardsDue(); idx=0; shown=false;
+  renderReview();
+}
+function renderReview(){
+  var z=document.getElementById("reviewZone");
+  if(!queue.length){ z.innerHTML='<div class="flip" style="align-items:center;justify-content:center;text-align:center"><div><div style="font-size:34px">🎉</div><div style="font-family:var(--display);font-size:18px;color:var(--indigo-deep);margin-top:6px">今天没有到期卡片</div><p class="sec-note">继续学新内容，卡片会按间隔重复回来。</p></div></div>'; return; }
+  if(idx>=queue.length){ z.innerHTML='<div class="flip" style="align-items:center;justify-content:center;text-align:center"><div><div style="font-size:34px">✅</div><div style="font-family:var(--display);font-size:18px;color:var(--indigo-deep);margin-top:6px">这轮复习完成（'+queue.length+' 张）</div><div style="margin-top:12px"><button class="btn btn-ghost btn-sm" onclick="startReview()">再查一遍到期</button></div></div></div>'; stats(); refreshManage(); return; }
+  var c=queue[idx], tp=TYPE[c.type]||["笔记","muted"];
+  z.innerHTML='<div class="flip"><div class="meta"><span class="badge '+tp[1]+'">'+tp[0]+'</span>'+
+      '<span class="badge muted">'+courseLabel(c.course)+(c.week?" · W"+c.week:"")+'</span>'+
+      (c.tags||[]).map(function(t){return '<span class="badge muted">#'+H.esc(t)+'</span>';}).join("")+
+      '<span style="flex:1"></span><span class="sec-note" style="margin:0">'+(idx+1)+' / '+queue.length+'</span></div>'+
+    '<div class="front">'+H.esc(c.front)+'</div>'+
+    (shown?('<div class="back">'+(c.back?H.esc(c.back):'<span class="sec-note">（这张没写答案——想一下，然后补上）</span>')+'</div>'+
+      '<div class="grade">'+
+        '<button class="again" data-g="again"><b>忘了</b>Again</button>'+
+        '<button class="hard" data-g="hard"><b>难</b>Hard</button>'+
+        '<button class="good" data-g="good"><b>会</b>Good</button>'+
+        '<button class="easy" data-g="easy"><b>秒懂</b>Easy</button>'+
+      '</div>')
+     :'<div style="margin-top:auto"><button class="btn btn-primary" id="showBtn" style="width:100%;justify-content:center">显示答案</button></div>')+
+    '</div>';
+  katex(z);
+  if(!shown){ document.getElementById("showBtn").onclick=function(){ shown=true; renderReview(); }; }
+  else z.querySelectorAll(".grade button").forEach(function(b){ b.onclick=function(){ H.schedule(c.id,b.getAttribute("data-g")); idx++; shown=false; renderReview(); }; });
+}
+
+/* ---------- manage list ---------- */
+function refreshManage(){
+  var fc=document.getElementById("fCourse").value, ft=document.getElementById("fType").value, q=document.getElementById("fSearch").value.trim().toLowerCase();
+  var list=H.cards().filter(function(c){
+    if(fc && c.course!==fc) return false;
+    if(ft && c.type!==ft) return false;
+    if(q){ var hay=(c.front+" "+(c.back||"")+" "+(c.tags||[]).join(" ")).toLowerCase(); if(hay.indexOf(q)<0) return false; }
+    return true;
+  });
+  var el=document.getElementById("manage");
+  el.innerHTML = list.length ? list.map(function(c){
+    var tp=TYPE[c.type]||["笔记","muted"];
+    return '<div class="mrow" data-id="'+c.id+'">'+
+      '<span class="badge '+tp[1]+'">'+tp[0]+'</span>'+
+      '<div class="body"><div class="fr">'+H.esc(c.front)+'</div>'+
+        (c.back?'<div style="color:var(--muted);font-size:13.5px;margin-top:3px">'+H.esc(c.back)+'</div>':'')+
+        '<div class="sub">'+courseLabel(c.course)+(c.week?" · W"+c.week:"")+' · 下次 '+H.esc(c.due||"—")+' · '+(c.reps||0)+' 次'+((c.tags&&c.tags.length)?' · '+c.tags.map(function(t){return "#"+H.esc(t);}).join(" "):'')+'</div>'+
+      '</div>'+
+      '<div style="display:flex;flex-direction:column;gap:4px"><button class="mini" data-edit="'+c.id+'">编辑</button><button class="mini" data-del="'+c.id+'" style="color:var(--danger)">删除</button></div>'+
+    '</div>';
+  }).join("") : '<p class="sec-note" style="margin:6px 0">没有匹配的卡片。</p>';
+  katex(el);
+  el.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ if(confirm("删除这张卡片？")){ H.deleteCard(b.getAttribute("data-del")); refreshManage(); stats(); } }; });
+  el.querySelectorAll("[data-edit]").forEach(function(b){ b.onclick=function(){ editCard(b.getAttribute("data-edit")); }; });
+}
+function editCard(id){
+  var c=H.cards().filter(function(x){return x.id===id;})[0]; if(!c) return;
+  var row=document.querySelector('.mrow[data-id="'+id+'"] .body');
+  row.innerHTML='<textarea class="field" id="ef" rows="2">'+H.esc(c.front)+'</textarea>'+
+    '<textarea class="field" id="eb" rows="2" style="margin-top:6px" placeholder="答案">'+H.esc(c.back||"")+'</textarea>'+
+    '<input class="field" id="et" style="margin-top:6px" value="'+H.esc((c.tags||[]).join(", "))+'" placeholder="标签，逗号分隔">'+
+    '<div style="margin-top:7px;display:flex;gap:7px"><button class="btn btn-primary btn-sm" id="es">保存</button><button class="btn btn-ghost btn-sm" id="ec">取消</button></div>';
+  document.getElementById("es").onclick=function(){ H.updateCard(id,{front:document.getElementById("ef").value.trim(),back:document.getElementById("eb").value.trim(),tags:document.getElementById("et").value.split(",").map(function(s){return s.trim();}).filter(Boolean)}); refreshManage(); };
+  document.getElementById("ec").onclick=refreshManage;
+}
+function fillCourseFilter(){
+  var sel=document.getElementById("fCourse"); var codes={}; H.cards().forEach(function(c){ if(c.course) codes[c.course]=1; });
+  sel.innerHTML='<option value="">全部课程</option>'+Object.keys(codes).map(function(k){return '<option value="'+k+'">'+courseLabel(k)+'</option>';}).join("");
+}
+
+document.getElementById("addBtn").onclick=function(){
+  var front=prompt("正面（问题 / 卡点）："); if(!front) return;
+  var back=prompt("背面（答案 / 解释，可留空）：")||"";
+  H.addCard({course:"",week:"",type:"keypoint",front:front.trim(),back:back.trim(),tags:[]});
+  fillCourseFilter(); refreshManage(); stats();
+};
+document.getElementById("exportBtn").onclick=function(){
+  var blob=new Blob([JSON.stringify(H.cards(),null,2)],{type:"application/json"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="cuotiben-"+H.today()+".json"; a.click();
+};
+["fCourse","fType"].forEach(function(id){ document.getElementById(id).onchange=refreshManage; });
+document.getElementById("fSearch").oninput=refreshManage;
+
+stats(); fillCourseFilter(); startReview(); refreshManage();
+</script>
+</body>
+</html>

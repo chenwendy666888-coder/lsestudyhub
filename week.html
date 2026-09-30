@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Week · LSE Study Hub</title>
+<meta name="theme-color" content="#3B37B5">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/katex/katex.min.css">
+<link rel="stylesheet" href="assets/hub.css">
+</head>
+<body>
+<div id="top"></div>
+<main class="wrap">
+  <div class="crumbs" id="crumbs"></div>
+  <div id="head"></div>
+  <nav class="loop" id="loop"></nav>
+
+  <section class="step card" id="s-read" style="margin-top:16px">
+    <div class="sec-h"><h2><span class="loop"></span>看 · Read</h2><span class="en">Lecture &amp; objectives</span></div>
+    <div id="objectives"></div>
+    <div id="lectureBtn" style="margin:14px 0 4px"></div>
+    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600;color:var(--muted);font-size:13.5px">Key terms 术语速览</summary><div id="terms"></div></details>
+  </section>
+
+  <section class="step" id="s-note" style="margin-top:16px">
+    <div class="sec-h"><h2>记 · Note</h2><span class="en">Your notes (Markdown)</span></div>
+    <p class="sec-note">笔记你自己写在 <code id="notePath"></code>。在 GitHub Pages 上会渲染在下面；本地双击打开时点链接看原文。</p>
+    <div class="card" id="noteBox">加载笔记…</div>
+  </section>
+
+  <section class="step" id="s-feynman" style="margin-top:16px">
+    <div class="sec-h"><h2>讲 · Feynman</h2><span class="en">Say it in one breath</span></div>
+    <p class="sec-note">每条用一两句人话讲清楚。讲不出＝没懂，回讲义。写完点「对照要点」自评。</p>
+    <div id="feynman"></div>
+  </section>
+
+  <section class="step" id="s-socratic" style="margin-top:16px">
+    <div class="sec-h"><h2>问 · Socratic</h2><span class="en">Answer the probing questions</span></div>
+    <div id="watch"></div>
+    <div id="socratic"></div>
+  </section>
+
+  <section class="step" id="s-practice" style="margin-top:16px">
+    <div class="sec-h"><h2>练 · Practice</h2><span class="en">Exercises</span></div>
+    <div id="exhead"></div>
+    <div class="card" id="exlist" style="margin-top:10px"></div>
+  </section>
+
+  <div class="grid c2" style="margin-top:16px">
+    <section class="step" id="s-ask">
+      <div class="sec-h"><h2>要问的问题</h2><span class="en">Ask in class / seminar / office hour</span></div>
+      <div class="tool">
+        <p class="hint">上课/小班/答疑前把卡点存这儿，问完打勾。</p>
+        <textarea class="field" id="askInput" rows="2" placeholder="例：Sandwich 定理里为什么要求两侧趋于同一个极限？"></textarea>
+        <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="askAdd">加入清单</button></div>
+        <div id="askList" style="margin-top:8px"></div>
+      </div>
+    </section>
+
+    <section class="step" id="s-ai">
+      <div class="sec-h"><h2>AI 使用记录</h2><span class="en">AI usage log</span></div>
+      <div class="tool">
+        <p class="hint">按系里政策，记下这周用 AI 做了什么、学到什么，保持透明可回溯。</p>
+        <textarea class="field" id="aiInput" rows="2" placeholder="例：让 AI 解释共轭技巧背后的恒等式；我自己重做了那道极限。"></textarea>
+        <div style="margin-top:8px"><button class="btn btn-ghost btn-sm" id="aiAdd">记一条</button></div>
+        <div id="aiList" style="margin-top:8px"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="step card" id="s-collect" style="margin-top:16px">
+    <div class="sec-h"><h2>收 · Collect &amp; 习 · Review</h2><span class="en">Cards from this week</span></div>
+    <p class="sec-note">右下角「🙋 我没懂 / 记一笔」随手把没懂/错题/必背存进错题本；它们会按间隔重复重现。</p>
+    <div id="weekCards"></div>
+    <div style="margin-top:12px"><a class="btn btn-primary btn-sm" href="review.html">去复习错题本 →</a></div>
+  </section>
+</main>
+<footer class="wrap" id="foot"></footer>
+
+<script src="assets/katex/katex.min.js"></script>
+<script src="assets/katex/auto-render.min.js"></script>
+<script src="assets/marked.min.js"></script>
+<script src="assets/hub.js"></script>
+<script src="data/ma221.js"></script>
+<script>
+var H = window.LSEHUB, c = H.qs("c") || "ma221", n = +(H.qs("w") || 1);
+var co = H.course(c), w = H.week(c, n);
+document.getElementById("top").outerHTML = H.topbar();
+
+function katex(root){ if(window.renderMathInElement) renderMathInElement(root||document.body,{delimiters:[{left:"$$",right:"$$",display:true},{left:"$",right:"$",display:false}],throwOnError:false}); }
+
+if (!co || !w) { document.getElementById("head").innerHTML = "<h1>Week not found</h1>"; }
+else {
+  H.applyAccent(c, n);
+  document.body.setAttribute("data-course", c);
+  document.body.setAttribute("data-week", n);
+  document.body.setAttribute("data-src", co.code + " Week " + n + " · " + w.title);
+
+  document.getElementById("crumbs").innerHTML =
+    '<a href="index.html">Hub</a><span class="sep">/</span><a href="course.html?c=' + c + '">' + H.esc(co.code) + '</a><span class="sep">/</span>Week ' + n;
+
+  // ---- head ----
+  var done = H.weekDone(c, n);
+  document.getElementById("head").innerHTML =
+    '<div style="display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap">' +
+      '<div style="flex:1;min-width:220px">' +
+        '<p class="kicker" style="color:var(--muted)">' + H.esc(co.code) + ' · Week ' + n + (w.status==="active"?' · 本周':'') + '</p>' +
+        '<h1 style="font-size:28px;color:var(--indigo-deep);margin:0 0 4px">' + H.esc(w.title) + '</h1>' +
+        '<p style="margin:0;color:var(--muted)">' + H.esc(w.titleZh) + ' · ' + H.esc((w.topics||[]).join(" · ")) + '</p>' +
+      '</div>' +
+      '<button class="btn ' + (done?"btn-primary":"btn-ghost") + '" id="doneBtn">' + (done?"✓ 本周已学完":"标记本周学完") + '</button>' +
+    '</div>';
+  document.getElementById("doneBtn").onclick = function(){ H.setWeekDone(c,n,!H.weekDone(c,n)); location.reload(); };
+
+  // ---- loop nav ----
+  var steps = [["s-read","看 Read"],["s-note","记 Note"],["s-feynman","讲 Feynman"],["s-socratic","问 Socratic"],["s-practice","练 Practice"],["s-ask","问老师 Ask"],["s-collect","收/习 Review"]];
+  document.getElementById("loop").innerHTML = steps.map(function(s){ return '<a href="#'+s[0]+'"><span class="g">'+s[1].split(" ")[0]+'</span> '+s[1].split(" ").slice(1).join(" ")+'</a>'; }).join("");
+
+  // ---- objectives ----
+  document.getElementById("objectives").innerHTML =
+    '<ul style="margin:4px 0;padding-left:20px">' + (w.objectives||[]).map(function(o){
+      return '<li style="margin:6px 0"><span style="font-weight:600">'+H.esc(o.en)+'</span><br><span style="color:var(--muted);font-size:13.5px">'+H.esc(o.zh)+'</span></li>';
+    }).join("") + '</ul>';
+
+  // ---- lecture button ----
+  document.getElementById("lectureBtn").innerHTML = w.lecture
+    ? '<a class="btn btn-primary" href="'+w.lecture+'">📖 打开本周讲义（双语）</a>' + (w.lectureNote?'<span class="sec-note" style="display:block;margin-top:6px">'+H.esc(w.lectureNote)+'</span>':'')
+    : '<span class="badge muted">讲义待上传</span>';
+
+  // ---- key terms ----
+  if (w.keyTerms && w.keyTerms.length) {
+    document.getElementById("terms").innerHTML = '<table class="terms">' + w.keyTerms.map(function(k){
+      return '<tr><td class="t">'+H.esc(k.t)+'</td><td class="z">'+H.esc(k.z)+'</td><td>'+H.esc(k.d)+'</td></tr>';
+    }).join("") + '</table>';
+  } else document.getElementById("terms").innerHTML = '<p class="sec-note">（本周术语随讲义补充）</p>';
+
+  // ---- notes (render MD if fetchable) ----
+  document.getElementById("notePath").textContent = w.notes || "—";
+  var nb = document.getElementById("noteBox");
+  if (w.notes) {
+    fetch(w.notes).then(function(r){ if(!r.ok) throw 0; return r.text(); }).then(function(md){
+      nb.innerHTML = '<div class="md">'+marked.parse(md)+'</div>';
+      katex(nb);
+    }).catch(function(){
+      nb.innerHTML = '你的笔记文件：<a href="'+w.notes+'">'+H.esc(w.notes)+'</a>　'+
+        '<span class="sec-note" style="display:inline">（本地双击打开无法内嵌渲染，点开即可编辑；部署到 GitHub Pages 后会渲染在此）</span>';
+    });
+  } else nb.textContent = "本周暂无笔记文件。";
+
+  // ---- feynman ----
+  document.getElementById("feynman").innerHTML = (w.feynman||[]).map(function(f){
+    return '<div class="tool" style="margin-bottom:12px">'+
+      '<h3>🗣️ '+H.esc(f.en)+'</h3><p class="hint">'+H.esc(f.zh)+'</p>'+
+      '<textarea class="field" data-save="feynman:'+c+':'+n+':'+f.id+'" rows="2" placeholder="用你自己的话讲一遍…"></textarea>'+
+      '<div style="display:flex;gap:8px;align-items:center;margin-top:7px;flex-wrap:wrap">'+
+        '<span class="savehint">saves automatically</span>'+
+        '<span style="flex:1"></span>'+
+        '<button class="chipbtn" data-card=\''+H.esc(JSON.stringify({front:f.en,tags:w.tags}))+'\'>没讲清 → 记一笔</button>'+
+      '</div>'+
+      '<details style="margin-top:8px"><summary style="cursor:pointer;font-size:13px;font-weight:600;color:var(--accent)">对照要点 self-check</summary>'+
+        '<ul style="margin:8px 0 0;padding-left:18px;font-size:13.5px;color:var(--muted)">'+(f.points||[]).map(function(p){return '<li>'+H.esc(p)+'</li>';}).join("")+'</ul></details>'+
+      '</div>';
+  }).join("") || '<p class="sec-note">（本周费曼提示随讲义补充）</p>';
+
+  // ---- watch / flagged ----
+  if (w.watch && w.watch.length) {
+    document.getElementById("watch").innerHTML = '<div class="callout warn"><span class="lead">⚠️ 已标记、待课上确认</span>'+
+      w.watch.map(function(x){ return '<div style="margin:6px 0">'+H.esc(x.zh)+'<div style="font-size:12.5px;color:var(--muted)">'+H.esc(x.en)+'</div></div>'; }).join("")+
+      '<button class="chipbtn" id="watch2ask" style="margin-top:4px">↑ 加进「要问的问题」</button></div>';
+  }
+
+  // ---- socratic ----
+  document.getElementById("socratic").innerHTML = (w.socratic||[]).map(function(s){
+    return '<details class="socratic"><summary>'+H.esc(s.q_en)+'</summary><div class="a">'+
+      '<p class="hint" style="margin-top:0">'+H.esc(s.q_zh)+'</p>'+
+      '<textarea class="field" data-save="socratic:'+c+':'+n+':'+s.id+'" rows="2" placeholder="你的回答…"></textarea>'+
+      '<div class="savehint" style="margin-top:5px">saves automatically</div></div></details>';
+  }).join("") || '<p class="sec-note">（本周苏格拉底问题随讲义补充）</p>';
+
+  // ---- exercises ----
+  var ex = w.exercises || {}; var assigned = ex.assigned || [];
+  var exd = assigned.filter(function(id){return H.exDone(c,n,id);}).length;
+  var pct = assigned.length?Math.round(100*exd/assigned.length):0;
+  var dueTxt = "";
+  if (ex.due) {
+    var days = Math.ceil((new Date(ex.due) - new Date())/86400000);
+    dueTxt = '<span class="badge '+(days<0?"warn":(days<=3?"accent":"muted"))+'">截止 '+H.esc(ex.dueLabel||ex.due)+(days>=0?' · D-'+days:' · 已过期')+'</span>';
+  }
+  document.getElementById("exhead").innerHTML =
+    '<div class="card"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'+
+      '<b style="font-family:var(--display);color:var(--indigo-deep)">'+H.esc(ex.set||"Exercises")+'</b>'+dueTxt+
+      '<span style="flex:1"></span><span class="progline" style="min-width:140px">作业 '+exd+'/'+assigned.length+'<span class="bar '+(pct===100?"ok":"")+'"><i style="width:'+pct+'%"></i></span></span>'+
+    '</div>'+(ex.note?'<p class="sec-note" style="margin:8px 0 0">'+H.esc(ex.note)+'</p>':'')+'</div>';
+
+  var items = ex.items && ex.items.length ? ex.items : assigned.map(function(id){return {id:id,hw:true,q:"(见 Moodle Exercises "+n+")"};});
+  document.getElementById("exlist").innerHTML = items.map(function(it){
+    var checked = H.exDone(c,n,it.id);
+    return '<div class="ex">'+
+      '<button class="tick" role="checkbox" aria-checked="'+checked+'" data-ex="'+H.esc(it.id)+'"></button>'+
+      '<div class="lab"><div class="q"><b>'+H.esc(it.id)+'</b>'+H.esc(it.q||"")+
+        (it.hw?' <span class="badge accent" style="margin-left:6px">homework</span>':' <span class="badge muted" style="margin-left:6px">optional</span>')+
+        (it.diff?' <span class="diff '+({lo:"lo",mid:"mid",hi:"hi"}[it.diff])+'">'+({lo:"🟢",mid:"🟡",hi:"🔴"}[it.diff])+'</span>':'')+'</div>'+
+        (it.hint?'<details><summary>提示 hint</summary><div class="h">'+H.esc(it.hint)+'</div></details>':'')+
+      '</div></div>';
+  }).join("");
+  document.querySelectorAll("#exlist .tick").forEach(function(t){
+    t.onclick = function(){ var v=t.getAttribute("aria-checked")!=="true"; t.setAttribute("aria-checked",v); H.setExDone(c,n,t.getAttribute("data-ex"),v);
+      var d=(w.exercises.assigned||[]).filter(function(id){return H.exDone(c,n,id);}).length; renderExHead(d); };
+  });
+  function renderExHead(d){ /* light refresh of the count */ var p=assigned.length?Math.round(100*d/assigned.length):0;
+    var el=document.querySelector("#exhead .progline"); if(el) el.innerHTML='作业 '+d+'/'+assigned.length+'<span class="bar '+(p===100?"ok":"")+'"><i style="width:'+p+'%"></i></span>'; }
+
+  // ---- questions to ask ----
+  var askKey = "questions:"+c+":"+n;
+  if (H.list(askKey).length===0 && w.watch && w.watch.length){ // pre-seed from flagged
+    w.watch.forEach(function(x){ H.listAdd(askKey,{text:x.zh,done:false,seed:true}); });
+  }
+  function renderList(key, elId, empty){
+    var a=H.list(key), el=document.getElementById(elId);
+    el.innerHTML = a.length ? a.map(function(o,i){
+      return '<div class="qa-item"><button class="tick" role="checkbox" aria-checked="'+(!!o.done)+'" data-k="'+key+'" data-i="'+i+'" style="width:19px;height:19px"></button>'+
+        '<div class="txt"'+(o.done?' style="text-decoration:line-through;color:var(--faint)"':'')+'>'+H.esc(o.text)+'<div class="when">'+H.esc(o.time)+'</div></div>'+
+        '<button class="x" data-del="'+key+'" data-i="'+i+'">✕</button></div>';
+    }).join("") : '<p class="sec-note" style="margin:6px 0 0">'+empty+'</p>';
+    el.querySelectorAll(".tick").forEach(function(t){ t.onclick=function(){ var a=H.list(key); a[+t.getAttribute("data-i")].done=!a[+t.getAttribute("data-i")].done; H.listSet(key,a); renderList(key,elId,empty); }; });
+    el.querySelectorAll("[data-del]").forEach(function(b){ b.onclick=function(){ var a=H.list(key); a.splice(+b.getAttribute("data-i"),1); H.listSet(key,a); renderList(key,elId,empty); }; });
+  }
+  document.getElementById("askAdd").onclick=function(){ var v=document.getElementById("askInput").value.trim(); if(!v)return; H.listAdd(askKey,{text:v,done:false}); document.getElementById("askInput").value=""; renderList(askKey,"askList","还没有问题。学的时候卡住就存一条。"); };
+  renderList(askKey,"askList","还没有问题。学的时候卡住就存一条。");
+
+  var wa=document.getElementById("watch2ask"); if(wa) wa.onclick=function(){ (w.watch||[]).forEach(function(x){ H.listAdd(askKey,{text:x.zh,done:false}); }); renderList(askKey,"askList",""); wa.textContent="已加入 ✓"; };
+
+  // ---- AI log ----
+  var aiKey = "ai:"+c+":"+n;
+  document.getElementById("aiAdd").onclick=function(){ var v=document.getElementById("aiInput").value.trim(); if(!v)return; H.listAdd(aiKey,{text:v}); document.getElementById("aiInput").value=""; renderList(aiKey,"aiList","还没有记录。"); };
+  renderList(aiKey,"aiList","还没有记录。");
+
+  // ---- this week's cards ----
+  function renderWeekCards(){
+    var cards=H.cards().filter(function(x){return x.course===c && String(x.week)===String(n);});
+    document.getElementById("weekCards").innerHTML = cards.length ? cards.map(function(x){
+      var tp={confuse:["🙋 没懂","live"],mistake:["✗ 错题","warn"],keypoint:["⭐ 必背","accent"]}[x.type]||["笔记","muted"];
+      return '<div class="qa-item"><span class="badge '+tp[1]+'">'+tp[0]+'</span><div class="txt">'+H.esc(x.front)+
+        (x.tags&&x.tags.length?'<div class="when">'+x.tags.map(function(t){return "#"+H.esc(t);}).join(" ")+'</div>':'')+'</div>'+
+        '<button class="x" data-cd="'+x.id+'">✕</button></div>';
+    }).join("") : '<p class="sec-note" style="margin:6px 0 0">这周还没记录任何卡片。用右下角的浮标随手记。</p>';
+    document.querySelectorAll("#weekCards [data-cd]").forEach(function(b){ b.onclick=function(){ H.deleteCard(b.getAttribute("data-cd")); renderWeekCards(); }; });
+  }
+  renderWeekCards();
+
+  // feynman "记一笔" chips
+  document.querySelectorAll(".chipbtn[data-card]").forEach(function(b){
+    b.onclick=function(){ var d=JSON.parse(b.getAttribute("data-card")); H.addCard({course:c,week:n,type:"confuse",front:d.front,tags:d.tags||[],src:co.code+" W"+n}); b.textContent="已记入错题本 ✓"; renderWeekCards(); };
+  });
+
+  H.wireAutosave(document);
+  katex(document.body);
+  document.getElementById("foot").innerHTML = "<a href='course.html?c="+c+"'>← "+H.esc(co.code)+"</a> · Week "+n;
+}
+</script>
+<script src="assets/collector.js"></script>
+</body>
+</html>
