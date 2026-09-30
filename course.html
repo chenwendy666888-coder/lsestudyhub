@@ -55,7 +55,6 @@
   if (!co) { document.getElementById("heroIn").innerHTML = "<h1>Course not found</h1>"; }
   else {
     H.applyAccent(c);
-    document.getElementById("hero").style.background = "linear-gradient(135deg,#24216B," + co.accent + ")";
     document.getElementById("band").innerHTML = H.bandSVG({ color: "#ffffff", opacity: 0.5 });
     document.getElementById("heroIn").innerHTML =
       '<p class="kicker">' + H.esc(co.code) + ' · ' + H.esc(co.term) + '</p>' +

@@ -1,0 +1,276 @@
+<section class="view" data-view="idea">
+  <div class="view-h"><div class="lbl">OVERVIEW</div><h2>The idea</h2><p class="zh">what a limit means</p></div>
+  <p class="tldr">A limit = the value a function settles into, and from when.</p>
+  <ul class="pts">
+    <li>$\lim_{t\to\infty} f(t)=L$ means: for large $t$, $f(t)$ is as close to $L$ as we want.</li>
+    <li><b>$\varepsilon$</b> = the tolerance — how close counts as &ldquo;equal.&rdquo;</li>
+    <li><b>$T$</b> = the threshold — how large $t$ must be before that holds.</li>
+    <li>Order matters: $T$ usually depends on $\varepsilon$.</li>
+  </ul>
+  <div class="callout note"><span class="lead">Read it as</span> Pick any $\varepsilon$. From some $T$ onward, $f(t)$ stays inside $[L-\varepsilon,\ L+\varepsilon]$.</div>
+</section>
+
+<section class="view" data-view="p1">
+  <div class="view-h"><div class="lbl">PART 1</div><h2>Limits at infinity</h2><p class="zh">the meaning</p></div>
+  <p class="tldr">$\lim_{t\to\infty} f(t)=L$ = $f$ gets and stays within $\varepsilon$ of $L$ after some $T$.</p>
+  <div class="callout def"><span class="lead">Definition</span> $\lim_{t\to\infty} f(t)=L$ if: for every $\varepsilon>0$ there is a $T$ such that $|f(t)-L|\le\varepsilon$ for all $t\ge T$.</div>
+  <h3>Asymptote &ne; &ldquo;never touches&rdquo;</h3>
+  <ul class="pts">
+    <li>$1+\tfrac1x \to 1$ &mdash; clean horizontal asymptote.</li>
+    <li>$\tfrac{\sin x}{x} \to 0$ &mdash; still tends to $0$ even though it crosses the axis infinitely often.</li>
+  </ul>
+  <h3>Memorise these</h3>
+  <ul class="pts">
+    <li>constant: $c \to c$</li>
+    <li>inverse power ($k>0$): $t^{-k} \to 0$</li>
+    <li>exponential decay ($c>1$): $c^{-t} \to 0$</li>
+  </ul>
+  <div class="wex" data-ex="ex1">
+    <div class="wex-h"><span class="diff lo">🟢</span> Example 1 · basic limits</div>
+    <div class="prob">$$\lim_{t\to\infty}\Big(3+2^{-t}-\tfrac1t\Big)$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Split into three separate limits, one per term.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>constant $3 \to 3$</li>
+        <li>$2^{-t} \to 0$ (decay, base $2>1$)</li>
+        <li>$\tfrac1t \to 0$ (inverse power)</li>
+        <li>add: $3+0-0$</li>
+      </ol>
+      <div class="ans">✅ Limit $=3$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex1:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex1:got"> Solved it myself</label></div>
+  </div>
+</section>
+
+<section class="view" data-view="p2">
+  <div class="view-h"><div class="lbl">PART 2</div><h2>Algebra of limits</h2><p class="zh">combine the parts</p></div>
+  <p class="tldr">Split a limit into parts, take each limit, recombine.</p>
+  <div class="callout def"><span class="lead">Rules&nbsp;(if $f\to a,\ g\to b$)</span>
+    <ul class="pts tight">
+      <li>$f\pm g \to a\pm b$</li>
+      <li>$fg \to ab$</li>
+      <li>$f/g \to a/b$&nbsp;&nbsp;(needs $b\ne0$)</li>
+      <li>$cf \to ca$;&nbsp;&nbsp;$f^{k}\to a^{k}$ (needs $a>0$)</li>
+    </ul>
+  </div>
+  <div class="wex" data-ex="ex2">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 2 · conjugate</div>
+    <div class="prob">$$\lim_{t\to\infty}\frac{2-\sqrt{4-\tfrac1t}}{\tfrac1t}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Multiply top and bottom by the conjugate $2+\sqrt{4-1/t}$.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>direct sub gives $\tfrac00$ &mdash; indeterminate</li>
+        <li>times $\dfrac{2+\sqrt{4-1/t}}{2+\sqrt{4-1/t}}$; numerator becomes $4-(4-\tfrac1t)=\tfrac1t$</li>
+        <li>so the expression $=\dfrac{1}{\,2+\sqrt{4-1/t}\,}$</li>
+        <li>$\sqrt{4-1/t}\to2$, giving $\dfrac1{2+2}$</li>
+      </ol>
+      <div class="ans">✅ Limit $=\tfrac14$</div>
+      <div class="callout warn" style="margin:10px 0 0"><span class="lead">⚠️ Check with the lecturer</span> The Tuesday slide ends at $\tfrac12$, but this method gives $\tfrac14$. Likely a slide typo &mdash; it&rsquo;s in your Week&nbsp;1 &ldquo;questions to ask.&rdquo;</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex2:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex2:got"> Solved it myself</label></div>
+  </div>
+  <h3>Useful identity</h3>
+  <ul class="pts">
+    <li>$A-B=\dfrac{A^2-B^2}{A+B}$ &mdash; the trick behind conjugates.</li>
+  </ul>
+  <div class="callout stop"><span class="lead">NEVER</span> $\sqrt{A-B}\ne\sqrt A-\sqrt B$. Roots do not split over subtraction.</div>
+  <h3>Dominant term</h3>
+  <ul class="pts">
+    <li>Biggest-growing term wins. Factor it out: $t^3-3t^2+2=t^3\big(1-\tfrac1t+\tfrac2{t^3}\big)$.</li>
+    <li>Bracket $\to1$, so $f(t)/t^3\to1$ &mdash; that&rsquo;s what &ldquo;dominant&rdquo; means.</li>
+  </ul>
+  <div class="wex" data-ex="ex3">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 3 · dominant term</div>
+    <div class="prob">$$\lim_{t\to\infty}\frac{t^3-3t^2+2}{4t^3+6\sqrt t}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Divide top and bottom by the highest power, $t^3$.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>divide top &amp; bottom by $t^3$</li>
+        <li>top: $1-\tfrac3t+\tfrac2{t^3}\to1$</li>
+        <li>bottom: $4+\tfrac6{t^{5/2}}\to4$</li>
+        <li>quotient rule (bottom $\ne0$)</li>
+      </ol>
+      <div class="ans">✅ Limit $=\tfrac14$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex3:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex3:got"> Solved it myself</label></div>
+  </div>
+  <h3>Sandwich theorem</h3>
+  <ul class="pts">
+    <li>Use it when a bounded wobble (like $\sin t$) blocks the algebra rules.</li>
+    <li>If $f\le g\le h$ and $f\to a,\ h\to a$, then $g\to a$.</li>
+    <li>e.g. $-\tfrac1t\le\tfrac{\sin t}{t}\le\tfrac1t \Rightarrow \tfrac{\sin t}{t}\to0$.</li>
+  </ul>
+  <div class="wex" data-ex="ex4">
+    <div class="wex-h"><span class="diff hi">🔴</span> Example 4 · Sandwich</div>
+    <div class="prob">$$\lim_{t\to\infty}\frac{2t^2-t^{3/2}\cos t}{\sqrt{1+t^4}}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Divide by $t^2$, then bound the $\cos t$ term with $|\cos t|\le1$.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>divide top &amp; bottom by $t^2$</li>
+        <li>top: $2-\tfrac{\cos t}{\sqrt t}$; since $\big|\tfrac{\cos t}{\sqrt t}\big|\le\tfrac1{\sqrt t}\to0$, top $\to2$ (Sandwich)</li>
+        <li>bottom: $\sqrt{\tfrac1{t^4}+1}\to1$</li>
+        <li>quotient rule</li>
+      </ol>
+      <div class="ans">✅ Limit $=2$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex4:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex4:got"> Solved it myself</label></div>
+  </div>
+</section>
+
+<section class="view" data-view="p3">
+  <div class="view-h"><div class="lbl">PART 3</div><h2>Infinite limits</h2><p class="zh">unbounded growth</p></div>
+  <p class="tldr">Some functions blow up. Same game, target is $\pm\infty$.</p>
+  <div class="callout def"><span class="lead">Definition</span> $\lim_{t\to\infty} f(t)=+\infty$ if: for every $M$ there is a $T$ with $f(t)\ge M$ for all $t\ge T$. And $\lim f=-\infty \iff \lim (-f)=+\infty$.</div>
+  <h3>Grow to $+\infty$</h3>
+  <ul class="pts">
+    <li>power ($k>0$): $t^k\to+\infty$</li>
+    <li>exponential ($c>1$): $c^t\to+\infty$</li>
+    <li>log: $\log t\to+\infty$</li>
+  </ul>
+  <div class="callout warn"><span class="lead">Trap</span> $f\to0$ does <b>not</b> give $\tfrac1f\to+\infty$. You also need $f>0$. If $f$ flips sign (like $\tfrac{\sin t}{t}$), $\tfrac1f$ has no limit.</div>
+  <div class="wex" data-ex="ex5">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 5 · to $-\infty$</div>
+    <div class="prob">$$\lim_{t\to\infty}\frac{1-2t^3}{\sqrt{t^5+4}}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Top behaves like $-2t^3$, bottom like $t^{5/2}$. Factor out those powers.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>top $=t^3(\tfrac1{t^3}-2)$, bottom $=t^{5/2}\sqrt{1+4/t^5}$</li>
+        <li>ratio $=t^{1/2}\cdot\dfrac{\tfrac1{t^3}-2}{\sqrt{1+4/t^5}}$</li>
+        <li>fraction $\to-2$, and $t^{1/2}\to+\infty$</li>
+        <li>$(+\infty)\times(-2)$</li>
+      </ol>
+      <div class="ans">✅ Limit $=-\infty$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex5:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex5:got"> Solved it myself</label></div>
+  </div>
+  <div class="wex" data-ex="ex6">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 6 · to $0$</div>
+    <div class="prob">$$\lim_{t\to\infty}\frac{t+\sin t}{\sqrt{t^3+t}}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Top grows like $t$, bottom like $t^{3/2}$. Bound $\sin t$ with the Sandwich theorem.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>top $=t(1+\tfrac{\sin t}{t})$, bracket $\to1$</li>
+        <li>bottom $=t^{3/2}\sqrt{1+1/t^2}$</li>
+        <li>ratio $=\dfrac{1+\sin t/t}{t^{1/2}\sqrt{1+1/t^2}}$: top $\to1$, bottom $\to+\infty$</li>
+        <li>finite $\div\infty$</li>
+      </ol>
+      <div class="ans">✅ Limit $=0$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex6:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex6:got"> Solved it myself</label></div>
+  </div>
+  <div class="callout stop"><span class="lead">STOP · indeterminate</span>
+    <ul class="pts tight">
+      <li>$\infty-\infty$: with $g=t^2$, $f-g$ can be $+\infty$, a constant, $-\infty$, or no limit.</li>
+      <li>$\tfrac{\infty}{\infty}$: $\tfrac{t^3}{t^2}\to\infty$, $\tfrac{ct^3}{t^3}\to c$, $\tfrac{t^2}{t^3}\to0$.</li>
+      <li>Never write $\infty-\infty=\infty$ or $\tfrac{\infty}{\infty}=\infty$. Simplify first.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="view" data-view="p4">
+  <div class="view-h"><div class="lbl">PART 4</div><h2>At a point &amp; one-sided</h2><p class="zh">limits near c</p></div>
+  <p class="tldr">Same idea near a point $c$. Watch the two sides.</p>
+  <div class="callout def"><span class="lead">Definition</span> $\lim_{t\to c} f(t)=L$ if: for every $\varepsilon>0$ there is $\delta>0$ with $|f(t)-L|\le\varepsilon$ whenever $0<|t-c|\le\delta$. The $0<$ means $f(c)$ itself is ignored.</div>
+  <ul class="pts">
+    <li>Algebra + Sandwich work the same as at $\infty$.</li>
+    <li>Two-sided limit exists $\iff$ left limit $=$ right limit.</li>
+  </ul>
+  <div class="wex" data-ex="ex7">
+    <div class="wex-h"><span class="diff lo">🟢</span> Example 7 · substitute</div>
+    <div class="prob">$$\lim_{x\to2}\frac{x^2}{x-4}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Denominator is not $0$ at $x=2$, so substitute directly.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>at $x=2$, denominator $=-2\ne0$ &rArr; continuous</li>
+        <li>substitute: $\dfrac{4}{-2}$</li>
+      </ol>
+      <div class="ans">✅ Limit $=-2$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex7:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex7:got"> Solved it myself</label></div>
+  </div>
+  <div class="wex" data-ex="ex8">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 8 · factor &amp; cancel</div>
+    <div class="prob">$$\lim_{x\to-2}\frac{x^3+8}{x^2-4}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">It&rsquo;s $\tfrac00$: factor both, cancel $(x+2)$.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>$\tfrac00$ &rArr; both share $(x+2)$</li>
+        <li>$x^3+8=(x+2)(x^2-2x+4)$, $x^2-4=(x+2)(x-2)$</li>
+        <li>cancel: $\dfrac{x^2-2x+4}{x-2}$</li>
+        <li>put $x=-2$: $\dfrac{12}{-4}$</li>
+      </ol>
+      <div class="ans">✅ Limit $=-3$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex8:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex8:got"> Solved it myself</label></div>
+  </div>
+  <div class="wex" data-ex="ex9">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 9 · to $+\infty$</div>
+    <div class="prob">$$\lim_{x\to1}\frac{x^2-3x+3}{(1-x)^2}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Numerator $\to1\ne0$. What does $(1-x)^2$ do near $1$?</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>numerator at $1$: $1-3+3=1>0$</li>
+        <li>denominator $(1-x)^2\to0^+$</li>
+        <li>positive $\div\,0^+$</li>
+      </ol>
+      <div class="ans">✅ Limit $=+\infty$</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex9:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex9:got"> Solved it myself</label></div>
+  </div>
+  <h3>One-sided</h3>
+  <ul class="pts">
+    <li>$\lim_{t\to c^-}$ approaches from below, $\lim_{t\to c^+}$ from above.</li>
+    <li>Left $\ne$ right (or one missing) $\Rightarrow$ two-sided does not exist.</li>
+  </ul>
+  <div class="wex" data-ex="ex10">
+    <div class="wex-h"><span class="diff hi">🔴</span> Example 10 · does not exist</div>
+    <div class="prob">$$\lim_{x\to1}\frac{x^2-3x+3}{1-x^2}$$</div>
+    <p class="trysay">Try it first. Stuck? Open the hint.</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Check the sign of the denominator from the left and the right of $1$.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>numerator $\to1>0$; denominator $1-x^2=(1-x)(1+x)$, $(1+x)\to2>0$</li>
+        <li>$x\to1^-$: $1-x>0 \Rightarrow$ denom $\to0^+ \Rightarrow +\infty$</li>
+        <li>$x\to1^+$: $1-x<0 \Rightarrow$ denom $\to0^- \Rightarrow -\infty$</li>
+        <li>left $\ne$ right</li>
+      </ol>
+      <div class="ans">✅ Two-sided limit does not exist (DNE)</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex10:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex10:got"> Solved it myself</label></div>
+  </div>
+  <div class="callout stop"><span class="lead">STOP · indeterminate forms</span> $\infty-\infty,\ \tfrac00,\ \tfrac{\infty}{\infty},\ 0\cdot\infty,\ 1^{\infty}$ &mdash; never plug straight in. Simplify (factor / conjugate / dominant term) first.</div>
+</section>
+
+<section class="view" data-view="sheet">
+  <div class="view-h"><div class="lbl">CHEAT SHEET</div><h2>One-page recap</h2><p class="zh">screenshot this</p></div>
+  <h3>Which trick when</h3>
+  <ul class="pts">
+    <li>rational / roots at $\infty$ &rarr; <b>dominant term</b> (divide by highest power)</li>
+    <li>$a-\sqrt{\ \cdot\ }$ shape &rarr; <b>conjugate</b></li>
+    <li>bounded wobble ($\sin,\cos$) &rarr; <b>Sandwich</b></li>
+    <li>$\tfrac00$ at a point &rarr; <b>factor &amp; cancel</b></li>
+    <li>$\tfrac{\text{nonzero}}{0}$ &rarr; check <b>left/right sign</b> for $\pm\infty$ or DNE</li>
+  </ul>
+  <h3>Definitions in one line</h3>
+  <ul class="pts">
+    <li>at $\infty$: $\forall\varepsilon\ \exists T\ \forall t\ge T,\ |f-L|\le\varepsilon$</li>
+    <li>$+\infty$: $\forall M\ \exists T\ \forall t\ge T,\ f\ge M$</li>
+    <li>at $c$: $\forall\varepsilon\ \exists\delta\ \forall t,\ 0<|t-c|\le\delta,\ |f-L|\le\varepsilon$</li>
+  </ul>
+  <div class="callout stop"><span class="lead">NEVER</span>
+    <ul class="pts tight">
+      <li>$\sqrt{A-B}\ne\sqrt A-\sqrt B$</li>
+      <li>no $\infty-\infty=\infty$, no $\tfrac{\infty}{\infty}=\infty$</li>
+    </ul>
+  </div>
+  <div class="cp">Done here? Use the floating button to save anything you missed, then head back to Week&nbsp;1 for Feynman + exercises.</div>
+</section>

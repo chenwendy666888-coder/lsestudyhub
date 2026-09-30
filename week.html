@@ -18,65 +18,80 @@
   <div id="head"></div>
   <nav class="loop" id="loop"></nav>
 
-  <section class="step card" id="s-read" style="margin-top:16px">
-    <div class="sec-h"><h2><span class="loop"></span>看 · Read</h2><span class="en">Lecture &amp; objectives</span></div>
-    <div id="objectives"></div>
-    <div id="lectureBtn" style="margin:14px 0 4px"></div>
-    <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600;color:var(--muted);font-size:13.5px">Key terms 术语速览</summary><div id="terms"></div></details>
-  </section>
+  <details class="wk-sec" id="s-read" open>
+    <summary class="wk-sum"><span class="tt">看 · Read</span><span class="en">Lecture &amp; objectives</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <div id="objectives"></div>
+      <div id="lectureBtn" style="margin:14px 0 4px"></div>
+      <details style="margin-top:6px"><summary style="cursor:pointer;font-weight:600;color:var(--muted);font-size:13.5px">Key terms 术语速览</summary><div id="terms"></div></details>
+    </div>
+  </details>
 
-  <section class="step" id="s-note" style="margin-top:16px">
-    <div class="sec-h"><h2>记 · Note</h2><span class="en">Your notes (Markdown)</span></div>
-    <p class="sec-note">笔记你自己写在 <code id="notePath"></code>。在 GitHub Pages 上会渲染在下面；本地双击打开时点链接看原文。</p>
-    <div class="card" id="noteBox">加载笔记…</div>
-  </section>
+  <details class="wk-sec" id="s-note" open>
+    <summary class="wk-sum"><span class="tt">记 · Note</span><span class="en">Your notes (Markdown)</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <p class="sec-note">笔记你自己写在 <code id="notePath"></code>。在 GitHub Pages 上会渲染在下面；本地双击打开时点链接看原文。</p>
+      <div class="card" id="noteBox">加载笔记…</div>
+    </div>
+  </details>
 
-  <section class="step" id="s-feynman" style="margin-top:16px">
-    <div class="sec-h"><h2>讲 · Feynman</h2><span class="en">Say it in one breath</span></div>
-    <p class="sec-note">每条用一两句人话讲清楚。讲不出＝没懂，回讲义。写完点「对照要点」自评。</p>
-    <div id="feynman"></div>
-  </section>
+  <details class="wk-sec" id="s-feynman" open>
+    <summary class="wk-sum"><span class="tt">讲 · Feynman</span><span class="en">Say it in one breath</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <p class="sec-note">每条用一两句人话讲清楚。讲不出＝没懂，回讲义。写完点「对照要点」自评。</p>
+      <div id="feynman"></div>
+    </div>
+  </details>
 
-  <section class="step" id="s-socratic" style="margin-top:16px">
-    <div class="sec-h"><h2>问 · Socratic</h2><span class="en">Answer the probing questions</span></div>
-    <div id="watch"></div>
-    <div id="socratic"></div>
-  </section>
+  <details class="wk-sec" id="s-socratic">
+    <summary class="wk-sum"><span class="tt">问 · Socratic</span><span class="en">Answer the probing questions</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <div id="watch"></div>
+      <div id="socratic"></div>
+    </div>
+  </details>
 
-  <section class="step" id="s-practice" style="margin-top:16px">
-    <div class="sec-h"><h2>练 · Practice</h2><span class="en">Exercises</span></div>
-    <div id="exhead"></div>
-    <div class="card" id="exlist" style="margin-top:10px"></div>
-  </section>
+  <details class="wk-sec" id="s-practice" open>
+    <summary class="wk-sum"><span class="tt">练 · Practice</span><span class="en">Exercises</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <div id="exhead"></div>
+      <div id="exlist" style="margin-top:10px"></div>
+    </div>
+  </details>
 
-  <div class="grid c2" style="margin-top:16px">
-    <section class="step" id="s-ask">
-      <div class="sec-h"><h2>要问的问题</h2><span class="en">Ask in class / seminar / office hour</span></div>
+  <details class="wk-sec" id="s-ask">
+    <summary class="wk-sum"><span class="tt">要问的问题</span><span class="en">Ask in class / seminar / office hour</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
       <div class="tool">
         <p class="hint">上课/小班/答疑前把卡点存这儿，问完打勾。</p>
         <textarea class="field" id="askInput" rows="2" placeholder="例：Sandwich 定理里为什么要求两侧趋于同一个极限？"></textarea>
         <div style="margin-top:8px"><button class="btn btn-primary btn-sm" id="askAdd">加入清单</button></div>
         <div id="askList" style="margin-top:8px"></div>
       </div>
-    </section>
+    </div>
+  </details>
 
-    <section class="step" id="s-ai">
-      <div class="sec-h"><h2>AI 使用记录</h2><span class="en">AI usage log</span></div>
+  <details class="wk-sec" id="s-ai">
+    <summary class="wk-sum"><span class="tt">AI 使用记录</span><span class="en">AI usage log</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
       <div class="tool">
         <p class="hint">按系里政策，记下这周用 AI 做了什么、学到什么，保持透明可回溯。</p>
         <textarea class="field" id="aiInput" rows="2" placeholder="例：让 AI 解释共轭技巧背后的恒等式；我自己重做了那道极限。"></textarea>
         <div style="margin-top:8px"><button class="btn btn-ghost btn-sm" id="aiAdd">记一条</button></div>
         <div id="aiList" style="margin-top:8px"></div>
       </div>
-    </section>
-  </div>
+    </div>
+  </details>
 
-  <section class="step card" id="s-collect" style="margin-top:16px">
-    <div class="sec-h"><h2>收 · Collect &amp; 习 · Review</h2><span class="en">Cards from this week</span></div>
-    <p class="sec-note">右下角「🙋 我没懂 / 记一笔」随手把没懂/错题/必背存进错题本；它们会按间隔重复重现。</p>
-    <div id="weekCards"></div>
-    <div style="margin-top:12px"><a class="btn btn-primary btn-sm" href="review.html">去复习错题本 →</a></div>
-  </section>
+  <details class="wk-sec" id="s-collect">
+    <summary class="wk-sum"><span class="tt">收 · Collect &amp; 习 · Review</span><span class="en">Cards from this week</span><span class="chev">&rsaquo;</span></summary>
+    <div class="wk-in">
+      <p class="sec-note">右下角「🙋 我没懂 / 记一笔」随手把没懂/错题/必背存进错题本；它们会按间隔重复重现。</p>
+      <div id="weekCards"></div>
+      <div style="margin-top:12px"><a class="btn btn-primary btn-sm" href="review.html">去复习错题本 →</a></div>
+    </div>
+  </details>
+
 </main>
 <footer class="wrap" id="foot"></footer>
 
@@ -193,7 +208,8 @@ else {
     '<div class="card"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">'+
       '<b style="font-family:var(--display);color:var(--indigo-deep)">'+H.esc(ex.set||"Exercises")+'</b>'+dueTxt+
       '<span style="flex:1"></span><span class="progline" style="min-width:140px">作业 '+exd+'/'+assigned.length+'<span class="bar '+(pct===100?"ok":"")+'"><i style="width:'+pct+'%"></i></span></span>'+
-    '</div>'+(ex.note?'<p class="sec-note" style="margin:8px 0 0">'+H.esc(ex.note)+'</p>':'')+'</div>';
+    '</div>'+(ex.note?'<p class="sec-note" style="margin:8px 0 0">'+H.esc(ex.note)+'</p>':'')+
+    '<p class="sec-note" style="margin:6px 0 0">老师批改后，把做错的题点「✗ 记为错题」收进错题本，之后按间隔重复复习。</p></div>';
 
   var items = ex.items && ex.items.length ? ex.items : assigned.map(function(id){return {id:id,hw:true,q:"(见 Moodle Exercises "+n+")"};});
   document.getElementById("exlist").innerHTML = items.map(function(it){
@@ -204,8 +220,14 @@ else {
         (it.hw?' <span class="badge accent" style="margin-left:6px">homework</span>':' <span class="badge muted" style="margin-left:6px">optional</span>')+
         (it.diff?' <span class="diff '+({lo:"lo",mid:"mid",hi:"hi"}[it.diff])+'">'+({lo:"🟢",mid:"🟡",hi:"🔴"}[it.diff])+'</span>':'')+'</div>'+
         (it.hint?'<details><summary>提示 hint</summary><div class="h">'+H.esc(it.hint)+'</div></details>':'')+
+        '<div style="margin-top:6px"><button class="chipbtn ex-wrong" data-wrong="'+H.esc(it.id)+'">✗ 记为错题</button></div>'+
       '</div></div>';
   }).join("");
+  document.querySelectorAll("#exlist .ex-wrong").forEach(function(bn){
+    bn.onclick=function(){ var id=bn.getAttribute("data-wrong"); var it=(items.filter(function(x){return x.id===id;})[0])||{id:id};
+      H.addCard({course:c,week:n,type:"mistake",front:(ex.set||"Exercises")+" · Q"+id+(it.q?" — "+it.q:""),back:"",tags:w.tags||[],src:co.code+" W"+n+" homework"});
+      bn.textContent="已收进错题本 ✓"; bn.disabled=true; try{renderWeekCards();}catch(e){} };
+  });
   document.querySelectorAll("#exlist .tick").forEach(function(t){
     t.onclick = function(){ var v=t.getAttribute("aria-checked")!=="true"; t.setAttribute("aria-checked",v); H.setExDone(c,n,t.getAttribute("data-ex"),v);
       var d=(w.exercises.assigned||[]).filter(function(id){return H.exDone(c,n,id);}).length; renderExHead(d); };
@@ -257,6 +279,12 @@ else {
   });
 
   H.wireAutosave(document);
+  var SEC="wksec:"+c+":"+n, sState=H.get(SEC,null);
+  document.querySelectorAll("details.wk-sec").forEach(function(d){
+    if(sState && (d.id in sState)) d.open=sState[d.id];
+    d.addEventListener("toggle",function(){ var s=H.get(SEC,{})||{}; s[d.id]=d.open; H.set(SEC,s); });
+  });
+  document.querySelectorAll(".loop a").forEach(function(el){ el.addEventListener("click",function(){ var t=document.querySelector(el.getAttribute("href")); if(t&&t.tagName==="DETAILS") t.open=true; }); });
   katex(document.body);
   document.getElementById("foot").innerHTML = "<a href='course.html?c="+c+"'>← "+H.esc(co.code)+"</a> · Week "+n;
 }
