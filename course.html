@@ -82,14 +82,30 @@
       right += '<span class="badge ' + (exd === assigned.length && assigned.length ? "ok" : "muted") + '">题 ' + exd + '/' + assigned.length + '</span>';
       var item = document.createElement("div");
       item.className = "tl-item " + state;
+      var panel = (w.topics && w.topics.length ? '<ul class="pts2">' + w.topics.map(function (t) { return '<li>' + H.esc(t) + '</li>'; }).join('') + '</ul>' : '') +
+        '<div class="tl-links">' +
+          (w.lecture ? '<a class="chip" href="' + w.lecture + '">📖 讲义</a>' : '') +
+          (assigned.length ? '<a class="chip" href="week.html?c=' + c + '&w=' + w.n + '">✎ Exercises ' + w.n + ' · ' + assigned.length + '</a>' : '') +
+          '<a class="chip open" href="week.html?c=' + c + '&w=' + w.n + '">打开本周 →</a>' +
+        '</div>';
       item.innerHTML =
         '<span class="tl-dot">' + (done ? "✓" : w.n) + '</span>' +
-        '<a class="tl-card" href="week.html?c=' + c + '&w=' + w.n + '">' +
-          '<span class="wk">Wk ' + w.n + '</span>' +
-          '<span class="tt"><b>' + H.esc(w.title) + '</b><span>' + H.esc(w.titleZh) + " · " + H.esc((w.topics || []).slice(0, 3).join(" · ")) + '</span></span>' +
-          '<span class="rt">' + right + '</span>' +
-        '</a>';
+        '<div class="tl-card2">' +
+          '<div class="tl-row">' +
+            '<a class="tl-main" href="week.html?c=' + c + '&w=' + w.n + '">' +
+              '<span class="wk">Wk ' + w.n + '</span>' +
+              '<span class="tt"><b>' + H.esc(w.title) + '</b><span>' + H.esc(w.titleZh) + " · " + H.esc((w.topics || []).slice(0, 3).join(" · ")) + '</span></span>' +
+              '<span class="rt">' + right + '</span>' +
+            '</a>' +
+            '<button class="tl-toggle" aria-expanded="false" title="展开"><span class="c">&rsaquo;</span></button>' +
+          '</div>' +
+          '<div class="tl-panel" hidden>' + panel + '</div>' +
+        '</div>';
       tl.appendChild(item);
+    });
+    document.querySelectorAll("#tl .tl-toggle").forEach(function (b) {
+      b.onclick = function () { var open = b.getAttribute("aria-expanded") === "true"; b.setAttribute("aria-expanded", String(!open));
+        var p = b.closest(".tl-card2").querySelector(".tl-panel"); if (p) p.hidden = open; };
     });
 
     document.getElementById("outcomes").innerHTML = co.outcomes.map(function (o) {
