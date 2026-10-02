@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FM214 · 课程信息 Course info</title>
+<meta name="theme-color" content="#C1121F">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📈</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..500;1,6..72,400..500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../../assets/hub.css">
+<style>
+  :root{--serif:"Newsreader","Iowan Old Style","PingFang SC","Georgia",serif}
+  .lead-note{font-family:var(--serif);font-size:16.5px;line-height:1.7;color:#26242a}
+  .lead-note .zh{display:block;color:var(--muted);font-size:14.5px;margin-top:3px}
+  /* two pillars */
+  .pillars{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .pillar{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--accent);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+  .pillar .wk{font:600 12px var(--mono);color:var(--accent)}
+  .pillar h3{font-family:var(--display);font-size:20px;margin:4px 0 2px;color:var(--ink)}
+  .pillar .zh{color:var(--muted);font-size:13px;margin-bottom:8px}
+  .pillar p{font-family:var(--serif);font-size:14.5px;line-height:1.66;margin:0;color:#2a2830}
+  .spine{margin-top:12px;font-family:var(--serif);font-size:14.5px;line-height:1.66;color:#6b4e00;background:var(--def-soft);border:1px solid var(--def);border-left:4px solid var(--def);border-radius:8px;padding:11px 14px}
+  .spine b{color:#9a6a06}
+  /* facts */
+  .facts{width:100%;border-collapse:collapse;font-size:14.5px}
+  .facts td{border-top:1px solid var(--line-soft);padding:9px 6px;vertical-align:top}
+  .facts tr:first-child td{border-top:none}
+  .facts td.k{font-weight:700;color:var(--accent);white-space:nowrap;width:118px;font-size:13.5px}
+  .facts td.v{font-family:var(--serif);color:#26242a;line-height:1.55}
+  /* quiz table */
+  .qz{width:100%;border-collapse:collapse;font-size:14px;margin-top:4px}
+  .qz th,.qz td{border:1px solid var(--line);padding:7px 10px;text-align:left}
+  .qz th{background:var(--accent);color:#fff;font-weight:600;border-color:var(--accent)}
+  .qz td.q{font-weight:700;color:var(--accent);white-space:nowrap}
+  /* study list */
+  ul.study{list-style:none;margin:0;padding:0}
+  ul.study li{position:relative;padding:8px 0 8px 26px;font-family:var(--serif);font-size:15px;line-height:1.62;border-top:1px dashed var(--line)}
+  ul.study li:first-child{border-top:none}
+  ul.study li::before{content:"→";position:absolute;left:2px;top:8px;color:var(--accent);font-weight:700;font-family:var(--sans)}
+  /* resources */
+  .res{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-top:1px solid var(--line-soft)}
+  .res:first-child{border-top:none}
+  .res .ic{flex:none;width:34px;height:34px;border-radius:9px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:17px}
+  .res .bd{flex:1;min-width:0}
+  .res .bd a,.res .bd .noline{font-weight:600;color:var(--ink)}
+  .res .bd a:hover{color:var(--accent)}
+  .res .bd .zh{color:var(--muted);font-size:12.5px}
+  .res .bd .meta{color:var(--faint);font-size:12.5px;margin-top:2px;font-family:var(--serif)}
+  .topstrip{display:flex;align-items:center;gap:10px;height:50px}
+  .topstrip .bk{color:var(--muted);font-weight:600;font-size:13.5px}
+  .topstrip .bk:hover{color:var(--accent);text-decoration:none}
+  @media (max-width:640px){ .pillars{grid-template-columns:1fr} .facts td.k{width:auto;display:block;padding-bottom:0} .facts td.v{display:block;padding-top:2px} }
+</style>
+</head>
+<body>
+<div class="wrap topstrip">
+  <a class="bk" href="../../../index.html">← Hub</a><span style="color:var(--faint)">/</span>
+  <a class="bk" id="toCourse" href="#">FM214</a><span style="color:var(--faint)">/</span>
+  <span style="color:var(--muted);font-weight:600;font-size:13.5px">课程信息</span>
+</div>
+
+<header class="hero" id="hero">
+  <div class="wrap in" id="heroIn"></div>
+</header>
+
+<main class="wrap" style="margin-top:22px">
+  <section id="pillarsSec">
+    <div class="sec-h"><h2>两大主线</h2><span class="en">The two pillars of the course</span></div>
+    <p class="sec-note" id="tagline"></p>
+    <div class="pillars" id="pillars"></div>
+    <div class="spine" id="spine"></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <div class="grid c2" style="align-items:start">
+    <section>
+      <div class="sec-h"><h2>课程信息</h2><span class="en">At a glance</span></div>
+      <div class="card"><table class="facts" id="facts"></table></div>
+    </section>
+    <section>
+      <div class="sec-h"><h2>考核 &amp; Quiz</h2><span class="en">Assessment &amp; quiz schedule</span></div>
+      <div class="card">
+        <p class="lead-note" id="assess" style="margin:0 0 10px"></p>
+        <table class="qz" id="qz"></table>
+      </div>
+    </section>
+  </div>
+
+  <div class="hr"></div>
+
+  <section>
+    <div class="sec-h"><h2>怎么学</h2><span class="en">How to study this course</span></div>
+    <div class="card"><ul class="study" id="study"></ul></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section>
+    <div class="sec-h"><h2>资源</h2><span class="en">Resources &amp; downloads</span></div>
+    <div class="card"><div id="resources"></div>
+      <div id="aiNote" style="margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap" id="foot"></footer>
+
+<script src="../../../assets/hub.js"></script>
+<script src="../../../data/ma221.js"></script>
+<script src="../../../data/fm214.js"></script>
+<script>
+  var H = window.LSEHUB, c = H.qs("c") || "fm214", co = H.course(c);
+  document.getElementById("toCourse").href = "../../../course.html?c=" + c;
+  if (!co) { document.getElementById("heroIn").innerHTML = "<h1>Course not found</h1>"; }
+  else {
+    H.applyAccent(c);
+    document.documentElement.style.setProperty("--herobg", co.accent);
+    document.getElementById("toCourse").textContent = co.code;
+    var info = co.info || {};
+
+    document.getElementById("heroIn").innerHTML =
+      '<p class="kicker">' + H.esc(co.code) + ' · ' + H.esc(co.term) + ' · 课程信息 Course info</p>' +
+      '<h1>' + H.esc(co.title) + '</h1>' +
+      '<p class="sub">' + H.esc(co.titleZh) + '</p>' +
+      '<div class="meta">' +
+        '<span class="pill">' + H.esc(co.convenor) + '</span>' +
+        (co.examPill ? '<span class="pill">' + H.esc(co.examPill) + '</span>' : '') +
+        '<span class="pill"><a href="' + (co.moodle || '#') + '" target="_blank" rel="noopener">Moodle ↗</a></span>' +
+      '</div>';
+
+    // tagline
+    if (info.tagline) document.getElementById("tagline").innerHTML =
+      H.esc(info.tagline) + (info.taglineZh ? '<br><span style="color:var(--faint)">' + H.esc(info.taglineZh) + '</span>' : '');
+
+    // pillars
+    document.getElementById("pillars").innerHTML = (info.pillars || []).map(function(p){
+      return '<div class="pillar"><div class="wk">' + H.esc(p.wk) + '</div>' +
+        '<h3>' + H.esc(p.t) + '</h3><div class="zh">' + H.esc(p.zh) + '</div>' +
+        '<p>' + H.esc(p.d) + '</p></div>';
+    }).join("");
+    if (info.spine) document.getElementById("spine").innerHTML = '<b>随机折现因子 · the spine:</b> ' + H.esc(info.spine);
+    else document.getElementById("spine").style.display = "none";
+
+    // facts
+    document.getElementById("facts").innerHTML = (info.facts || []).map(function(f){
+      return '<tr><td class="k">' + H.esc(f.k) + '</td><td class="v">' + H.esc(f.v) + '</td></tr>';
+    }).join("");
+
+    // assessment + quiz table
+    document.getElementById("assess").textContent = co.assessment || "";
+    document.getElementById("qz").innerHTML =
+      '<tr><th>Quiz</th><th>Opens</th><th>Covers</th></tr>' +
+      (info.quizzes || []).map(function(q){
+        return '<tr><td class="q">' + H.esc(q.q) + '</td><td>' + H.esc(q.wk) + '</td><td>' + H.esc(q.covers) + '</td></tr>';
+      }).join("");
+
+    // study
+    document.getElementById("study").innerHTML = (info.study || []).map(function(s){
+      return '<li>' + H.esc(s) + '</li>';
+    }).join("");
+
+    // resources
+    var icons = ["📄","📘","📙","🎓","🔗"];
+    document.getElementById("resources").innerHTML = (co.resources || []).map(function(r, i){
+      var title = r.href
+        ? '<a href="' + r.href + '" target="_blank" rel="noopener">' + H.esc(r.label) + ' ↗</a>'
+        : '<span class="noline">' + H.esc(r.label) + '</span>';
+      return '<div class="res"><div class="ic">' + (icons[i] || "🔗") + '</div><div class="bd">' +
+        title + (r.zh ? '　<span class="zh">' + H.esc(r.zh) + '</span>' : '') +
+        (r.meta ? '<div class="meta">' + H.esc(r.meta) + '</div>' : '') + '</div></div>';
+    }).join("");
+
+    // AI policy + prereq pointer
+    var ai = co.aiPolicy ? '🤖 <a href="' + co.aiPolicy.url + '" target="_blank" rel="noopener">' + H.esc(co.aiPolicy.label) + ' ↗</a>' : '';
+    document.getElementById("aiNote").innerHTML = ai +
+      '<br>📌 前置知识见 <a href="../../../course.html?c=' + c + '">课程主页</a> 的「前置 &amp; 政策」,或直接打开上面的 Background handout。';
+
+    document.getElementById("foot").innerHTML = "<b>" + H.esc(co.code) + "</b> · " + H.esc(co.title) +
+      " · <a href='../../../course.html?c=" + c + "'>← 课程主页</a> · <a href='../../../index.html'>Hub</a>";
+  }
+</script>
+</body>
+</html>

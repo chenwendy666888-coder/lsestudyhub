@@ -7,7 +7,7 @@
 <meta name="theme-color" content="#3B37B5">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📐</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,400..500;1,6..72,400..500&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/hub.css">
 </head>
 <body>
@@ -49,6 +49,7 @@
 
 <script src="assets/hub.js"></script>
 <script src="data/ma221.js"></script>
+<script src="data/fm214.js"></script>
 <script>
   var H = window.LSEHUB, c = H.qs("c") || "ma221", co = H.course(c);
   document.getElementById("top").outerHTML = H.topbar();
@@ -63,7 +64,8 @@
       '<p class="sub">' + H.esc(co.titleZh) + '</p>' +
       '<div class="meta">' +
         '<span class="pill">' + H.esc(co.convenor) + '</span>' +
-        '<span class="pill">100% exam</span>' +
+        '<span class="pill">' + H.esc(co.examPill || "100% exam") + '</span>' +
+        (co.infoUrl ? '<span class="pill"><a href="' + co.infoUrl + '">课程信息 ↗</a></span>' : '') +
         '<span class="pill"><a href="' + co.moodle + '" target="_blank" rel="noopener">Moodle ↗</a></span>' +
       '</div>';
 

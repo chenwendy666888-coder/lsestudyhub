@@ -6,6 +6,14 @@
 
 零构建：可以直接**双击 `index.html`** 打开，也可以推到 **GitHub Pages**。
 
+### 已收录课程
+| 课程 | 中文 | 配色 | 讲义类型 |
+|---|---|---|---|
+| **MA221** Further Mathematical Methods (Calculus) | 高等数学方法（微积分） | 红 + 绿 | 无-slide 型（按讲授内容写） |
+| **FM214** Principles of Finance I | 金融学原理 I | 红 + 金/琥珀 | slide 讲义型（照官方 slides 逐节解读，标注 slide 号） |
+
+> FM214 有官方 slides，Week 1 讲义 `courses/fm214/lectures/w01_portfolio_capm.html` 按 slides 1–39 分 7 个 part 逐节解读；配色为**红做结构 + 金/琥珀做强调**（定义/例题/TL;DR）。
+
 ---
 
 ## 页面

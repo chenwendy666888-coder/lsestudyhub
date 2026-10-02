@@ -1,0 +1,336 @@
+<section class="view" data-view="idea">
+  <div class="view-h"><div class="lbl">OVERVIEW · slides 1–9</div><h2>What this course is about</h2><p class="zh">课程地图 · 两种定价方式</p></div>
+  <p class="tldr">All of FM214 answers two questions: <b>what is the price of risk?</b> and <b>what stops free lunches?</b> · 全课就两问:风险的价格是多少?什么阻止免费午餐?</p>
+
+  <div class="callout note"><span class="lead">The two pillars 两根支柱</span>
+    <ul class="pts tight">
+      <li><b>Equilibrium pricing</b> (L1–5): start from investors' preferences, derive what expected return each risk <i>should</i> earn when markets clear. · 均衡定价:从偏好出发,推导市场出清时每种风险应得的预期收益。</li>
+      <li><b>No-arbitrage pricing</b> (L6–10): say nothing about preferences; price assets off <i>other</i> assets' prices by ruling out <i>free lunches</i>. · 无套利定价:不碰偏好,用别的资产的价格、靠排除套利来定价。</li>
+      <li>They meet in one object — the <b>stochastic discount factor</b> \(1=\mathbb{E}[M(1+r_i)]\) — in L3 and L6. That equation is the <i>spine</i> of the course. · 两条线在随机折现因子里汇合,是全课的脊梁。</li>
+    </ul>
+  </div>
+
+  <h3>Roadmap · 课程地图</h3>
+  <table class="ltab">
+    <tr><th>Equilibrium 均衡 (L1–5)</th><th>No-arbitrage 无套利 (L6–10)</th></tr>
+    <tr><td>L1 Portfolio theory &amp; the CAPM</td><td>L6 Absence of arbitrage: state prices, SDF</td></tr>
+    <tr><td>L2 Expected utility &amp; portfolio choice</td><td>L7 Valuation of bonds</td></tr>
+    <tr><td>L3 The consumption CAPM</td><td>L8 Bond expected returns</td></tr>
+    <tr><td>L4 Valuation of stocks; efficiency</td><td>L9 Forwards &amp; futures</td></tr>
+    <tr><td>L5 Anomalies &amp; alternative models</td><td>L10 Options (binomial, Black–Scholes)</td></tr>
+  </table>
+
+  <div class="callout warn"><span class="lead">⚠️ Week 0 handout — do it first</span> <code>FM214_background.pdf</code> (PV/FV, NPV, perpetuities &amp; annuities, compounding, real vs nominal, and a full statistics review) is <b>assumed known from Lecture 1</b> and tested directly in <b>Quiz 1</b>. L1 uses the statistics (mean, variance, covariance) within its first hour. · 背景讲义假设你已掌握,Quiz 1 直接考,L1 第一个小时就用到其中的统计。</div>
+
+  <div class="cp"><b>How to study (from the lecturer):</b> redo every worked example by hand without the slide (January is closed-book, Casio only); do the class exercise <i>before</i> class; use quizzes as diagnostics; start the sample papers early. AI is fine for explaining a concept you missed, counterproductive for doing the exercises for you. · 亲手重做每道例题、课前做题、拿 quiz 当体检、尽早刷样卷;AI 用来解释概念可以,替你做题则适得其反。</div>
+
+  <p class="cn">Logistics (lecturer Dr Cameron Peng; Fri 11–1 Peacock Theatre; 90% January exam, 10% quizzes) live on the <a href="../../../course.html?c=fm214">course page</a>. Today = Lecture 1.</p>
+</section>
+
+
+<section class="view" data-view="p1">
+  <div class="view-h"><div class="lbl">PART 1 · slides 10–13</div><h2>Risk and return: look at the data</h2><p class="zh">先看一个世纪的数据</p></div>
+  <p class="tldr">Over 1926–2025, equities earned far more than bills — and swung far more. Two facts the whole lecture must explain. · 百年数据:股票收益远高、波动也远大;这两个事实是今天要解释的。</p>
+
+  <h3>A dollar since 1926 · 1926 年的一美元</h3>
+  <ul class="pts">
+    <li>$1 at end-1925, income reinvested. <b>Nominally</b> equities end at <b>$16,960</b>, bills at <b>$25</b>; prices rose ~19×. · 名义上股票变成 \( \$16{,}960 \),国库券只有 \( \$25 \)。</li>
+    <li><b>Real</b> (CPI-deflated): equities \(\to\$916\), bills \(\to\$1.34\). Bills barely beat inflation. · 实际(扣通胀)后国库券几乎没跑赢物价。</li>
+  </ul>
+
+  <h3>Summary statistics, 1926–2025 · 汇总统计</h3>
+  <table class="ltab num">
+    <tr><th>US, 1926–2025</th><th>Arith. mean %</th><th>Geo. mean %</th><th>SD %</th></tr>
+    <tr><td>US equities</td><td>12.1</td><td>10.2</td><td>19.7</td></tr>
+    <tr><td>Gov. bonds (10y)</td><td>5.0</td><td>4.7</td><td>7.6</td></tr>
+    <tr><td>Treasury bills</td><td>3.3</td><td>3.3</td><td>3.1</td></tr>
+    <tr><td>Inflation</td><td>3.0</td><td>3.0</td><td>3.9</td></tr>
+  </table>
+  <ul class="pts">
+    <li><b>Equity premium:</b> equities beat bills by <b>8.8%</b>/yr arithmetic (7.0% compounded). <span class="cn">这是全课最重要的一个数字。</span></li>
+    <li>Higher average return comes with higher SD — the asset rows line up. · 平均收益越高、标准差越大,三行资产正好排成一列。</li>
+    <li>Arithmetic &gt; geometric whenever returns are volatile, and the gap \(\approx \sigma^2/2\) (equities: \(12.1-10.2\approx19.7^2/2\div100\)). What compounds your wealth is the <b>geometric</b> mean — and equities still win. · 有波动时算术均值 &gt; 几何均值,差约 \(\sigma^2/2\);真正复利你财富的是几何均值。</li>
+  </ul>
+
+  <div class="callout def"><span class="lead">Two facts to explain 两个待解释的事实</span>
+    <ul class="pts tight">
+      <li><b>Fact 1.</b> Stocks earn more than bonds and bills on average.</li>
+      <li><b>Fact 2.</b> Stocks are much riskier (1931: −44%; 1933: +57%; 2022: stocks −20% <i>and</i> 10y bonds −15%).</li>
+    </ul>
+  </div>
+  <ul class="pts">
+    <li>Natural hypothesis: (1) is <i>compensation</i> for (2) — a <b>risk premium</b>. · 自然猜想:高收益是对高风险的补偿。</li>
+    <li>But <i>which</i> risk, exactly? Total volatility, or something narrower? L1–L3 answer in three passes. · 但到底是哪种风险?这正是 L1–L3 分三步回答的。</li>
+  </ul>
+</section>
+
+
+<section class="view" data-view="p2">
+  <div class="view-h"><div class="lbl">PART 2 · slides 14–18</div><h2>Measuring risk and portfolios</h2><p class="zh">方差、协方差、分散化</p></div>
+  <p class="tldr">Risk = variance. For a portfolio, mean is a <i>weighted average</i> but variance is <i>quadratic</i> and depends on every correlation — and that asymmetry is where diversification lives. · 风险用方差度量;组合的均值是线性加权,方差却是二次、依赖所有相关系数——分散化就藏在这个不对称里。</p>
+
+  <div class="callout def"><span class="lead">Definition · risk of a return</span>
+    For a random return \(r\) with mean \(\mu=\mathbb{E}[r]\):
+    \[\mathrm{Var}(r)=\sigma^2=\mathbb{E}\!\left[(r-\mu)^2\right],\qquad \sigma=\sqrt{\mathrm{Var}(r)}.\]
+    \(\sigma\) (volatility) is in return units — "± how much in a typical year." In data use sample versions \(\hat\mu=\tfrac1T\sum_t r_t,\ \hat\sigma^2=\tfrac1{T-1}\sum_t (r_t-\hat\mu)^2\).
+  </div>
+
+  <div class="wex" data-ex="ex1">
+    <div class="wex-h"><span class="diff lo">🟢</span> Example 1 · a coin-toss stock</div>
+    <div class="prob">Two fair coin flips: HH \(\to+40\%\), HT/TH \(\to+10\%\), TT \(\to-20\%\) (probabilities \(\tfrac14,\tfrac12,\tfrac14\)). Find \(\mu\) and \(\sigma\).</div>
+    <p class="trysay"><b>How to recognise:</b> discrete outcomes with known probabilities → just apply the definitions. <b>How to start:</b> mean first, then square deviations from that mean. · 怎么认:离散、概率已知;怎么下手:先算均值,再对均值求平方偏差。</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">Deviations from the mean are what the variance squares — not the raw returns.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>\(\mu=\tfrac14(40)+\tfrac12(10)+\tfrac14(-20)=10\%\)</li>
+        <li>deviations: \(+30,\ 0,\ -30\)</li>
+        <li>\(\sigma^2=\tfrac14(30)^2+\tfrac12(0)^2+\tfrac14(-30)^2=450\ (\%^2)\)</li>
+        <li>\(\sigma=\sqrt{450}=21.2\%\)</li>
+      </ol>
+      <div class="ans">✅ \(\mu=10\%,\ \ \sigma=21.2\%\)</div>
+      <p class="cn" style="margin:8px 0 0">Sanity check: 21.2% ≈ the 19.7% historical SD of a diversified index; a single stock is usually far more volatile.</p>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex1:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex1:got"> Solved it myself</label></div>
+  </div>
+
+  <h3>The two workhorse formulas · 两个主力公式</h3>
+  <div class="callout def"><span class="lead">Portfolio mean &amp; variance</span>
+    Weights \(w_i\) with \(\sum_i w_i=1\) (\(w_i&lt;0\) = short), return \(r_P=\sum_i w_i r_i\):
+    \[\mathbb{E}[r_P]=\sum_i w_i\,\mu_i,\qquad \mathrm{Var}(r_P)=\sum_i\sum_j w_i w_j\,\rho_{ij}\,\sigma_i\sigma_j.\]
+    Two assets: \(\ \mathrm{Var}(r_P)=w_1^2\sigma_1^2+w_2^2\sigma_2^2+2w_1w_2\,\rho_{12}\,\sigma_1\sigma_2.\)
+  </div>
+  <ul class="pts">
+    <li>Mean is <b>linear</b> in weights; variance is <b>quadratic</b> and uses all \(\rho_{ij}\). · 均值线性、方差二次。</li>
+    <li>For \(0&lt;w&lt;1\): \(\sigma_P=w_1\sigma_1+w_2\sigma_2\) <i>only if</i> \(\rho_{12}=1\); for any \(\rho_{12}&lt;1\) it is strictly smaller. · 只有完全正相关才等于加权平均,否则严格更小。</li>
+  </ul>
+
+  <div class="wex" data-ex="ex2">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 2 · a 60/40 two-asset portfolio</div>
+    <div class="prob">Technology \(\mu_T=19\%,\sigma_T=18\%\); staples \(\mu_S=10\%,\sigma_S=13\%\); \(\rho=0.5\). Take \(w_T=0.6,\ w_S=0.4\). Find \(\mathbb{E}[r_P]\) and \(\sigma_P\).</div>
+    <p class="trysay"><b>How to recognise:</b> two assets, weights given → plug into the two formulas. <b>How to start:</b> mean by weighted average; variance term-by-term, don't forget the cross term. · 怎么认:两资产+权重已知;怎么下手:均值加权,方差逐项算、别漏交叉项。</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">The cross term is \(2w_Tw_S\rho\sigma_T\sigma_S\). Keep units in \(\%^2\), take the square root at the end.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>\(\mathbb{E}[r_P]=0.6(19)+0.4(10)=15.4\%\)</li>
+        <li>own terms: \(0.36(324)+0.16(169)=116.64+27.04\)</li>
+        <li>cross term: \(2(0.6)(0.4)(0.5)(18)(13)=56.16\)</li>
+        <li>\(\mathrm{Var}=199.8\ (\%^2)\Rightarrow\sigma_P=\sqrt{199.8}=14.1\%\)</li>
+      </ol>
+      <div class="ans">✅ \(\mathbb{E}[r_P]=15.4\%,\ \ \sigma_P=14.1\%\)</div>
+      <p class="cn" style="margin:8px 0 0">Weighted average of the \(\sigma\)'s is \(0.6(18)+0.4(13)=16.0\%\); the portfolio's 14.1% sits below it. <b>That gap <i>is</i> diversification</b>, and it appears because \(\rho=0.5&lt;1\).</p>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex2:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex2:got"> Solved it myself</label></div>
+  </div>
+
+  <h3>Diversification: the result · 分散化的结论</h3>
+  <ul class="pts">
+    <li>Equal weights \(1/N\), each variance \(\sigma^2\), common pairwise correlation \(\rho\):</li>
+  </ul>
+  <div class="thm"><div class="t">Diversification</div>
+    \[\mathrm{Var}(r_P)=\underbrace{\tfrac1N\sigma^2}_{\text{idiosyncratic}\to 0}+\underbrace{\tfrac{N-1}{N}\rho\sigma^2}_{\text{systematic}\to\rho\sigma^2}\ \xrightarrow[N\to\infty]{}\ \rho\sigma^2.\]
+    <p class="cn" style="margin:8px 0 0">Derivation: \(\mathrm{Var}(r_P)=\tfrac1{N^2}\!\left[N\sigma^2+N(N-1)\rho\sigma^2\right]\) — \(N\) variance terms, \(N(N-1)\) covariance terms — divide through.</p>
+  </div>
+  <div class="callout note"><span class="lead">Key idea 关键</span> Diversification kills <i>idiosyncratic</i> risk <b>for free</b>; the <i>systematic</i> part \(\rho\sigma^2\) survives. <b>If risk can be shed for nothing, the market will not pay you to bear it.</b> · 特质风险可以免费分散掉;只有分散不掉的系统风险,市场才会给补偿。</div>
+</section>
+
+
+<section class="view" data-view="p3">
+  <div class="view-h"><div class="lbl">PART 3 · slides 19–25</div><h2>The frontier &amp; two-fund separation</h2><p class="zh">前沿、切点组合、两基金分离</p></div>
+  <p class="tldr">Mean–variance investors trace a frontier (a "bullet"). Add a risk-free asset and the best menu is one straight line through the single <b>tangency</b> portfolio — so everyone holds the <i>same</i> risky portfolio, levered up or down. · 加入无风险资产后,最优菜单是过唯一切点组合的一条直线;于是人人持有同一个风险组合,只是杠杆不同。</p>
+
+  <div class="callout warn"><span class="lead">Assumption (to be justified in L2)</span> <b>Mean–variance preferences:</b> investors like higher \(\mathbb{E}[r_P]\), dislike higher \(\mathrm{Var}(r_P)\); nothing else about the distribution matters. Why only mean and variance (not skewness, crash risk)? L2 derives exactly when this is justified. · 均值—方差偏好:只在意均值和方差;为什么不管偏度?L2 会给出成立的确切条件。</div>
+
+  <h3>Two stocks: the opportunity set · 机会集</h3>
+  <p>Stock \(A\): \(\mu_A=9\%,\sigma_A=42\%\). Stock \(B\): \(\mu_B=6\%,\sigma_B=30\%\). \(\rho=0.30\).</p>
+  <table class="ltab num">
+    <tr><th>\(w_A\)</th><td>−0.25</td><td>0</td><td>0.27</td><td>0.50</td><td>1</td><td>1.25</td></tr>
+    <tr><th>\(\mathbb{E}[r_P]\) %</th><td>5.3</td><td>6.0</td><td>6.8</td><td>7.5</td><td>9.0</td><td>9.8</td></tr>
+    <tr><th>\(\sigma_P\) %</th><td>35.8</td><td>30.0</td><td><b>27.5</b></td><td>29.2</td><td>42.0</td><td>50.8</td></tr>
+  </table>
+  <ul class="pts">
+    <li>At \(w_A\approx0.27\): <b>lower risk than either stock alone</b>, mean in between — the bend of the "bullet". · 比单独持有任一只都更低风险。</li>
+    <li>\(w_A=1.25\) (short \(B\)): higher mean, much higher risk — short sales extend the set. · 做空会把机会集向两端拉长。</li>
+    <li>The curve bends <i>left</i> of the straight line joining \(A,B\): that bend <b>is</b> diversification. Upper limb = <b>efficient</b> (highest mean for given risk); nobody holds the lower limb. · 弯曲就是分散化;上半支才有效。</li>
+  </ul>
+
+  <div class="thm"><div class="t">Many assets — the frontier</div>
+    For each target mean \(\bar\mu\): \(\displaystyle\min_{w_1,\dots,w_N}\mathrm{Var}(r_P)\ \text{ s.t. }\ \sum_i w_i\mu_i=\bar\mu,\ \sum_i w_i=1.\) Tracing solutions over \(\bar\mu\) gives the <b>minimum-variance frontier</b> — a hyperbola in \((\sigma,\mu)\); its upper limb is the <b>efficient frontier</b>.
+  </div>
+  <ul class="pts">
+    <li>Every extra asset pushes the frontier northwest. Adding assets can <b>never hurt</b> (put zero weight on the newcomer); it strictly helps unless the new asset is already mean–variance spanned. · 多一个资产不会变差,通常变好。</li>
+  </ul>
+
+  <h3>Add a risk-free asset → a straight line · 加入无风险资产</h3>
+  <p>Mix weight \(w\) in risky \(P\), \(1-w\) at \(r_f\):</p>
+  <div class="callout def"><span class="lead">Capital allocation line</span>
+    \[\mathbb{E}[r]=r_f+w\big(\mathbb{E}[r_P]-r_f\big),\qquad \sigma=|w|\,\sigma_P.\]
+    Substituting \(w=\sigma/\sigma_P\) gives the line \(\ \mathbb{E}[r]=r_f+\dfrac{\mathbb{E}[r_P]-r_f}{\sigma_P}\,\sigma.\)
+  </div>
+  <ul class="pts">
+    <li>A straight line from \((0,r_f)\) through \((\sigma_P,\mathbb{E}[r_P])\). Slope = the <b>Sharpe ratio</b> \(\dfrac{\mathbb{E}[r_P]-r_f}{\sigma_P}\) — extra mean per unit of risk. · 斜率就是夏普比率。</li>
+    <li>\(w&gt;1\): borrow at \(r_f\) and lever up — points beyond \(P\) on the same line. · 杠杆就是延长线。</li>
+  </ul>
+
+  <div class="callout def"><span class="lead">Tangency portfolio &amp; the CML</span> Pivot the line up until it is <b>tangent</b> to the frontier at \(T\): \(T\) is the risky portfolio with the <b>maximum Sharpe ratio</b>. Everything on this (capital market) line dominates everything on the curve except \(T\) itself.</div>
+
+  <div class="thm"><div class="t">Theorem · two-fund separation</div>
+    With a risk-free asset, <b>every</b> mean–variance investor holds a combination of just two funds: \(r_f\) and the tangency portfolio \(T\). Investors who agree on \(\mu_i,\sigma_i,\rho_{ij},r_f\) hold the <b>same</b> \(T\). Risk aversion sets only the mix, never the composition of \(T\).
+  </div>
+  <ul class="pts">
+    <li>Cautious: mostly \(r_f\), a little \(T\). Aggressive: levered \(T\). <b>Nobody holds a <i>different</i> risky portfolio.</b> · 保守的多拿无风险、激进的加杠杆,但风险组合都是同一个 \(T\)。</li>
+    <li>Your job, age and tastes affect <i>how much</i> risk you take, <i>not</i> <i>which</i> risky portfolio. This is the intellectual foundation of <b>index funds</b> — and the springboard to the CAPM. · 这就是指数基金的理论根基,也是通往 CAPM 的跳板。</li>
+  </ul>
+</section>
+
+
+<section class="view" data-view="p4">
+  <div class="view-h"><div class="lbl">PART 4 · slides 26–35</div><h2>The CAPM</h2><p class="zh">切点=市场 · beta · 证券市场线</p></div>
+  <p class="tldr">If everyone holds the same \(T\) and markets clear, \(T\) must be the <b>market</b> \(M\). Then what an asset must earn depends only on its <b>beta</b> — its <i>covariance</i> with the market, not its own <i>variance</i>. · 人人持同一个 \(T\) 且市场出清 ⇒ \(T=M\);于是资产该赚多少只取决于它的 beta(与市场的协方差),与自身方差无关。</p>
+
+  <div class="callout warn"><span class="lead">Equilibrium assumptions (stated honestly)</span> all investors are MV optimizers over the same horizon; <b>homogeneous expectations</b> (agree on all \(\mu_i,\sigma_i,\rho_{ij}\)); frictionless markets (no taxes/costs, unlimited borrow/lend at \(r_f\), unlimited short sales). Strong — the value is the sharpness of the prediction; L5 confronts it with data. · 假设很强,但诚实摆出;模型的价值在于预测够锋利,L5 用数据检验。</div>
+
+  <div class="callout def"><span class="lead">Equilibrium: \(T=M\)</span> By two-fund separation every investor's risky holdings are the same \(T\). Markets must clear — all shares held by someone — so the aggregate risky portfolio — the value-weighted <i>market portfolio</i> \(M\) — must equal \(T\). <b>Prices adjust until the market portfolio is the tangency portfolio.</b> · 价格会调整到市场组合就是切点组合。</div>
+
+  <div class="callout def"><span class="lead">Definition · beta</span>
+    \[\beta_i=\frac{\mathrm{Cov}(r_i,r_M)}{\mathrm{Var}(r_M)}=\rho_{iM}\,\frac{\sigma_i}{\sigma_M}.\]
+    Regression form: \(r_i-r_f=\alpha_i+\beta_i(r_M-r_f)+\varepsilon_i\) — \(\beta_i\) is the slope. Market \(\beta_M=1\); cash \(\beta=0\); portfolio betas add linearly \(\beta_P=\sum_i w_i\beta_i\).
+  </div>
+  <ul class="pts">
+    <li><b>Beta is <i>not</i> relative volatility.</b> A very volatile stock with low correlation has a <i>small</i> beta. · 高波动但低相关 ⇒ beta 反而小。</li>
+  </ul>
+
+  <h3>The two parts of risk · 风险的两部分</h3>
+  <div class="callout def"><span class="lead">Variance decomposition</span>
+    Taking variances of the regression (with \(\varepsilon_i\perp r_M\)):
+    \[\sigma_i^2=\underbrace{\beta_i^2\sigma_M^2}_{\text{systematic}}+\underbrace{\mathrm{Var}(\varepsilon_i)}_{\text{idiosyncratic}},\qquad R^2=\frac{\beta_i^2\sigma_M^2}{\sigma_i^2}=\rho_{iM}^2.\]
+  </div>
+  <div class="wex" data-ex="ex3">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 3 · splitting a stock's variance</div>
+    <div class="prob">\(\sigma_i=36\%,\ \sigma_M=18\%,\ \rho_{iM}=0.4\). Find \(\beta_i\) and the systematic share of variance.</div>
+    <p class="trysay"><b>How to recognise:</b> you're given \(\sigma_i,\sigma_M,\rho\) → beta via \(\rho\,\sigma_i/\sigma_M\), systematic share is \(\rho^2\). · 怎么认:给了两个 σ 和 ρ;系统占比就是 \(\rho^2\)。</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">\(\beta=\rho_{iM}\,\sigma_i/\sigma_M\); systematic variance \(=\beta^2\sigma_M^2\); divide by total \(\sigma_i^2\).</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>\(\beta_i=0.4\times 36/18=0.8\)</li>
+        <li>systematic \(=0.8^2\times0.18^2=0.0207\)</li>
+        <li>total \(=0.36^2=0.1296\)</li>
+        <li>share \(=0.0207/0.1296=16\%\ (=\rho^2)\)</li>
+      </ol>
+      <div class="ans">✅ \(\beta=0.8\); 16% systematic, <b>84% idiosyncratic</b> — diversifiable.</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex3:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex3:got"> Solved it myself</label></div>
+  </div>
+
+  <div class="callout note"><span class="lead">Why beta, not variance? — marginal risk</span> Your portfolio is (essentially) \(M\). Add a sliver \(\varepsilon\) of asset \(i\), funded from \(r_f\): \(\ \mathrm{Var}(r_M+\varepsilon r_i)\approx\mathrm{Var}(r_M)+2\varepsilon\,\mathrm{Cov}(r_i,r_M).\) The <i>marginal</i> risk is the <b>covariance</b> — idiosyncratic variance never appears. Only <i>covariance</i> can command a premium. · 在边际上,加一点资产 \(i\) 带来的风险增量就是协方差;特质方差根本不出现。</div>
+
+  <div class="callout def"><span class="lead">The CAPM (Sharpe 1964, Lintner 1965)</span>
+    \[\mathbb{E}[r_i]-r_f=\beta_i\big(\mathbb{E}[r_M]-r_f\big)\quad\text{for every asset }i.\]
+    \(\underbrace{\mathbb{E}[r_i]-r_f}_{\text{risk premium on }i}=\underbrace{\beta_i}_{\text{quantity of risk}}\times\underbrace{\big(\mathbb{E}[r_M]-r_f\big)}_{\text{price of risk}}.\)
+  </div>
+  <details class="soln" style="margin:12px 0"><summary>✅ Proof sketch (3 steps) · 证明梗概</summary><div class="in">
+    <ol class="steps">
+      <li>Form a portfolio: weight \(w\) in asset \(i\), \(1-w\) in \(M\); trace its curve in \((\sigma,\mu)\).</li>
+      <li>At \(w=0\) the curve passes through \(M\) and lies below the CML on both sides (nothing beats the CML) ⇒ it is <b>tangent</b> there, so its slope at \(M\) equals the CML slope \(\dfrac{\mathbb{E}[r_M]-r_f}{\sigma_M}\).</li>
+      <li>Compute the left side and rearrange — out drops the security market line. ∎</li>
+    </ol>
+  </div></details>
+
+  <h3>The security market line (SML) · 证券市场线</h3>
+  <ul class="pts">
+    <li>Plot expected return against <b>beta</b> (not \(\sigma\)). Line through \((0,r_f)\) and \((1,\mathbb{E}[r_M])\), slope \(=\mathbb{E}[r_M]-r_f\). · 横轴是 beta 不是 σ。</li>
+    <li><b>In equilibrium every asset and every portfolio — efficient or not — plots on the SML.</b> · 均衡下所有资产都落在 SML 上。</li>
+  </ul>
+  <div class="callout warn"><span class="lead">⚠️ SML vs CML — do not confuse them</span>
+    <table class="ltab mini">
+      <tr><th></th><th>CML</th><th>SML</th></tr>
+      <tr><th>x-axis</th><td>total risk \(\sigma\)</td><td>systematic risk \(\beta\)</td></tr>
+      <tr><th>who's on it</th><td>only efficient portfolios</td><td>all assets &amp; portfolios</td></tr>
+      <tr><th>slope</th><td>Sharpe ratio of \(M\)</td><td>\(\mathbb{E}[r_M]-r_f\)</td></tr>
+      <tr><th>message</th><td>best risk–return menu</td><td>fair return per unit of \(\beta\)</td></tr>
+    </table>
+    A single stock sits <b>below</b> the CML (it carries diversifiable risk) but <b>on</b> the SML (only its beta is priced). · 单只股票在 CML 下方、却在 SML 上。
+  </div>
+
+  <div class="callout def"><span class="lead">Definition · alpha</span>
+    \[\alpha_i=\mathbb{E}[r_i]-\big[r_f+\beta_i(\mathbb{E}[r_M]-r_f)\big]\]
+    the expected return <b>beyond</b> the CAPM benchmark. \(\alpha&gt;0\): underpriced — buy. \(\alpha&lt;0\): overpriced — sell/short. Under CAPM equilibrium every \(\alpha_i=0\). · 均衡下所有 alpha 都被竞争抹平。
+  </div>
+</section>
+
+
+<section class="view" data-view="p5">
+  <div class="view-h"><div class="lbl">PART 5 · slides 36–38</div><h2>Using the CAPM — and the data</h2><p class="zh">例题 · 用途 · 实证</p></div>
+  <p class="tldr">The CAPM gives the right discount rate for a given risk. But in the data, high-beta portfolios don't earn what the SML promises — the dots are too flat. Hold that thought for L5. · CAPM 给出风险对应的折现率;但数据里高 beta 并没赚到 SML 承诺的收益——留到 L5。</p>
+
+  <div class="wex" data-ex="ex4">
+    <div class="wex-h"><span class="diff lo">🟢</span> Example 4 · expected return from beta</div>
+    <div class="prob">\(r_f=3\%,\ \mathbb{E}[r_M]=12\%,\ \beta=1.5\). Find \(\mathbb{E}[r]\).</div>
+    <p class="trysay"><b>How to start:</b> plug straight into the SML \(\mathbb{E}[r]=r_f+\beta(\mathbb{E}[r_M]-r_f)\). · 直接代 SML。</p>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps"><li>\(\mathbb{E}[r]=3+1.5(12-3)\)</li><li>\(=3+13.5\)</li></ol>
+      <div class="ans">✅ \(\mathbb{E}[r]=16.5\%\)</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex4:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex4:got"> Solved it myself</label></div>
+  </div>
+
+  <div class="wex" data-ex="ex5">
+    <div class="wex-h"><span class="diff mid">🟡</span> Example 5 · back out the market premium</div>
+    <div class="prob">A \(\beta=0.75\) stock has expected excess return 6%. Find the market premium, then the total expected return of a \(\beta=1.3\) stock when \(r_f=2\%\).</div>
+    <p class="trysay"><b>How to recognise:</b> they give you premium &amp; beta, ask for the <i>price of risk</i> → invert the CAPM, then re-apply. · 怎么认:给溢价+beta 求风险价格;先反解再代回。</p>
+    <details class="hint"><summary>💡 Hint</summary><div class="in">\(\text{excess}=\beta\times(\mathbb{E}[r_M]-r_f)\). Solve for the bracket first.</div></details>
+    <details class="soln"><summary>✅ Solution</summary><div class="in">
+      <ol class="steps">
+        <li>\(6=0.75\times(\mathbb{E}[r_M]-r_f)\Rightarrow \mathbb{E}[r_M]-r_f=8\%\)</li>
+        <li>\(\beta=1.3\): excess \(=1.3\times8=10.4\%\)</li>
+        <li>total \(=r_f+\text{excess}=2+10.4\)</li>
+      </ol>
+      <div class="ans">✅ premium \(=8\%\); total expected return \(=12.4\%\)</div>
+    </div></details>
+    <div class="selfrow"><label><input type="checkbox" data-sc="ex5:hint"> Used the hint</label><label><input type="checkbox" data-sc="ex5:got"> Solved it myself</label></div>
+  </div>
+
+  <h3>What is the CAPM <i>for</i>? · CAPM 有什么用</h3>
+  <ul class="pts">
+    <li><b>Discount rates:</b> valuing a project/stock needs an expected return matched to its risk — \(\bar r=r_f+\beta(\mathbb{E}[r_M]-r_f)\). Exactly the input L4's valuation formulas need. · 给估值提供折现率,正是 L4 要的输入。</li>
+    <li><b>Cost of capital:</b> same formula from the firm's side. · 企业端就是资本成本。</li>
+    <li><b>Performance evaluation:</b> skill is \(\alpha\), <i>not</i> raw return — levering beta is not skill. · 本事是 alpha,不是堆 beta。</li>
+    <li><b>Portfolio tilting:</b> found \(\alpha&gt;0\)? Overweight it — but recognise you're <i>disagreeing</i> with the market. · 你在跟市场对赌。</li>
+  </ul>
+
+  <div class="callout stop"><span class="lead">Does the data support it?</span> Ten \(\beta\)-sorted US portfolios (1963–2026): the realised line is <i>too flat</i> — high-\(\beta\) portfolios do not earn what the SML (slope ≈ 7.2) promises. The empirical failure, and what to make of it, is <b>Lecture 5</b>. · 按 beta 排序的组合实际收益线太平,高 beta 没赚到承诺的钱;完整说法在 L5。</div>
+</section>
+
+
+<section class="view" data-view="sheet">
+  <div class="view-h"><div class="lbl">CHEAT SHEET</div><h2>One-page recap</h2><p class="zh">一页速查 · 截图这页</p></div>
+
+  <h3>The formulas that must live in your hands</h3>
+  <ul class="pts">
+    <li>Variance / vol: \(\sigma^2=\mathbb{E}[(r-\mu)^2]\), \(\sigma=\sqrt{\sigma^2}\)</li>
+    <li>Portfolio: \(\mathbb{E}[r_P]=\sum_i w_i\mu_i\), \(\mathrm{Var}(r_P)=\sum_i\sum_j w_iw_j\rho_{ij}\sigma_i\sigma_j\)</li>
+    <li>Two assets: \(\mathrm{Var}=w_1^2\sigma_1^2+w_2^2\sigma_2^2+2w_1w_2\rho_{12}\sigma_1\sigma_2\)</li>
+    <li>Diversification: \(\mathrm{Var}(r_P)=\tfrac1N\sigma^2+\tfrac{N-1}{N}\rho\sigma^2\to\rho\sigma^2\)</li>
+    <li>Sharpe / CML slope: \(\dfrac{\mathbb{E}[r_P]-r_f}{\sigma_P}\) &nbsp; CML: \(\mathbb{E}[r]=r_f+\tfrac{\mathbb{E}[r_M]-r_f}{\sigma_M}\sigma\)</li>
+    <li>Beta: \(\beta_i=\tfrac{\mathrm{Cov}(r_i,r_M)}{\mathrm{Var}(r_M)}=\rho_{iM}\tfrac{\sigma_i}{\sigma_M}\)</li>
+    <li>CAPM / SML: \(\mathbb{E}[r_i]-r_f=\beta_i(\mathbb{E}[r_M]-r_f)\)</li>
+    <li>Alpha: \(\alpha_i=\mathbb{E}[r_i]-[r_f+\beta_i(\mathbb{E}[r_M]-r_f)]\)</li>
+  </ul>
+
+  <h3>Which line is which</h3>
+  <ul class="pts">
+    <li><b>CML</b> — x-axis \(\sigma\); only <b>efficient</b> portfolios; slope = Sharpe of \(M\).</li>
+    <li><b>SML</b> — x-axis \(\beta\); <b>every</b> asset; slope = \(\mathbb{E}[r_M]-r_f\).</li>
+    <li>A single stock: below the CML, on the SML.</li>
+  </ul>
+
+  <div class="callout stop"><span class="lead">The spine of the lecture 一句话</span>
+    <ul class="pts tight">
+      <li>Only <b>systematic</b> (undiversifiable) risk is priced; idiosyncratic risk earns nothing.</li>
+      <li>Everyone holds \(r_f+T\); equilibrium forces \(T=M\); the price of covariance is \(\mathbb{E}[r_M]-r_f\).</li>
+    </ul>
+  </div>
+
+  <div class="callout def"><span class="lead">Two facts, restated</span> Equities earn a large premium (≈8.8%) and are far riskier. The CAPM says the premium is pay for <b>beta</b> — but the data (flat line) already hints the story is incomplete. Next: <b>why</b> investors care about mean &amp; variance (expected utility, L2).</div>
+
+  <div class="cp">Done here? Use the floating button (bottom-right) to save anything you missed into your 错题本, then head back to <a href="../../../week.html?c=fm214&amp;w=1">Week 1</a> for Feynman, the class exercise, and your notes.</div>
+</section>
